@@ -11,7 +11,6 @@
         public string AlienId { get; set; }
         //public ApplicationUser Alien { get; set; }
 
-        public string Status { get; set; }
-        //public ApplicationStatus Status { get; set; }
+        public ApplicationStatus Status { get; set; }
     }
 }
