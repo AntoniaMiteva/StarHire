@@ -4,12 +4,14 @@
     {
         public int Id { get; set; }
 
-        public string UserId { get; set; }
-
         public int JobId { get; set; }
 
         public Job Job { get; set; }
 
-        public string Status { get; set; } = "Pending";
+        public string AlienId { get; set; }
+        //public ApplicationUser Alien { get; set; }
+
+        public string Status { get; set; }
+        //public ApplicationStatus Status { get; set; }
     }
 }
