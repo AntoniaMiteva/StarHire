@@ -20,7 +20,7 @@ public class ApplicationService : IApplicationService
         _mapper = mapper;
     }
 
-    public async Task ApplyAsync(Guid jobId, Guid userId, string message)
+    public async Task ApplyAsync(Guid jobId, string userId, string message)
     {
         var alreadyApplied = await _applicationRepository.Query()
             .AnyAsync(a => a.JobId == jobId && a.AlienId == userId);
@@ -42,7 +42,7 @@ public class ApplicationService : IApplicationService
         await _applicationRepository.CommitAsync();
     }
 
-    public async Task<List<ApplicationViewModel>> GetMyApplicationsAsync(Guid userId)
+    public async Task<List<ApplicationViewModel>> GetMyApplicationsAsync(string userId)
     {
         var applications = await _applicationRepository.Query()
             .Include(a => a.Job)

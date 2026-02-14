@@ -9,8 +9,8 @@ namespace StarHire.Business.Services.Interfaces
 {
     public interface IApplicationService
     {
-        public Task ApplyAsync(Guid jobId, Guid userId, string message);
-        public Task<List<ApplicationViewModel>> GetMyApplicationsAsync(Guid userId);
+        public Task ApplyAsync(Guid jobId, string userId, string message);
+        public Task<List<ApplicationViewModel>> GetMyApplicationsAsync(string userId);
 
 
     }
