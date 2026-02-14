@@ -18,10 +18,10 @@ namespace StarHire.Models.Domain.Entities
 
         public string Planet { get; set; } = string.Empty;
 
-        public Guid EmployeerId { get; set; }
-        public IdentityUser Employeer { get; set; }
+        public string EmployeerId { get; set; }
+        public virtual IdentityUser Employeer { get; set; }
 
-        public ICollection<Application> Applications { get; set; } = new List<Application>();
+        public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
     }
 
 }
