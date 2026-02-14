@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace StarHire.Controllers
 {
-    [Authorize(Roles = "Employer")]
+    [Authorize(Roles = "Admin,Employer")]
     public class JobsController : Controller
     {
         public IActionResult MyJobs()

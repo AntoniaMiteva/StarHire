@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StarHire.Business.Repositories.Implementations;
+using StarHire.Business.Repositories.Interfaces;
+using StarHire.Business.Services.Interfaces;
 using StarHire.Data;
+using StarHire.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +21,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
 .AddRoles<IdentityRole>() 
 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddTransient<IApplicationService, ApplicationService>();
 
 var app = builder.Build();
 
