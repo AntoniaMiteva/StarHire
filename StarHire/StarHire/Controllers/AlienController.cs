@@ -5,7 +5,7 @@ namespace StarHire.Controllers
 {
     public class AlienController : Controller
     {
-        [Authorize(Roles = "Alien")]
+        [Authorize(Roles = "Admin,Alien")]
         public IActionResult Index(int id)
         {
             return View();
