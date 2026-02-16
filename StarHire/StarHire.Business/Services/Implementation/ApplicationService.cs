@@ -27,7 +27,7 @@ public class ApplicationService : IApplicationService
 
         if (alreadyApplied)
         {
-            throw new InvalidOperationException("Вече си кандидатствал за тази обява.");
+            throw new InvalidOperationException("You have already applied for this job!");
         }
 
         

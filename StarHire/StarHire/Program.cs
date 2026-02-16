@@ -24,6 +24,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IApplicationService, ApplicationService>();
+builder.Services.AddTransient<IJobService, JobService>();
 
 var app = builder.Build();
 
