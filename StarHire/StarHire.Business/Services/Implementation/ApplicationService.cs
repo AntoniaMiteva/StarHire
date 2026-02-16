@@ -30,13 +30,17 @@ public class ApplicationService : IApplicationService
             throw new InvalidOperationException("Вече си кандидатствал за тази обява.");
         }
 
-        //TODO: var application = _mapper.Map<Application>(viewmodel)
-        var application =  new Application
-            {
-                JobId = jobId,
-                AlienId = userId,
-                Status = ApplicationStatus.Pending
-            };
+        
+        var viewModel = new CreateApplicationViewModel
+        {
+            JobId = jobId,
+            AlienId = userId,
+            Message = message,
+            Status = ApplicationStatus.Pending
+        };
+
+        // Map viewmodel to Application entity
+        var application = _mapper.Map<Application>(viewModel);
 
         await _applicationRepository.AddAsync(application);
         await _applicationRepository.CommitAsync();

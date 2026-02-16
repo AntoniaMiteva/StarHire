@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using StarHire.Models;
+using StarHire.Models.Domain.Entities;
 
 namespace StarHire.Data
 {
@@ -18,7 +18,7 @@ namespace StarHire.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure decimal precision to avoid silent truncation
+           
             modelBuilder.Entity<Job>()
                 .Property(j => j.Salary)
                 .HasPrecision(18, 2);
