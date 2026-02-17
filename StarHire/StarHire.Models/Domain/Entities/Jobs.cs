@@ -23,7 +23,7 @@ namespace StarHire.Models.Domain.Entities
 
         public IdentityUser<Guid> Employeer { get; set; }  
 
-        public ICollection<Application> Applications { get; set; } = new List<Application>();
+        public virtual ICollection<Application> Applications { get; set; } = new List<Application>();
     }
 
 }
