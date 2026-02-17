@@ -27,16 +27,20 @@ public class ApplicationService : IApplicationService
 
         if (alreadyApplied)
         {
-            throw new InvalidOperationException("Вече си кандидатствал за тази обява.");
+            throw new InvalidOperationException("You have already applied for this job!");
         }
 
-        //TODO: var application = _mapper.Map<Application>(viewmodel)
-        var application =  new Application
-            {
-                JobId = jobId,
-                AlienId = userId,
-                Status = ApplicationStatus.Pending
-            };
+        
+        var viewModel = new CreateApplicationViewModel
+        {
+            JobId = jobId,
+            AlienId = userId,
+            Message = message,
+            Status = ApplicationStatus.Pending
+        };
+
+        // Map viewmodel to Application entity
+        var application = _mapper.Map<Application>(viewModel);
 
         await _applicationRepository.AddAsync(application);
         await _applicationRepository.CommitAsync();

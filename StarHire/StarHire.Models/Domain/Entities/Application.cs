@@ -10,9 +10,11 @@ namespace StarHire.Models.Domain.Entities
 
         public virtual Job Job { get; set; }
 
-        public string AlienId { get; set; }
-        public IdentityUser Alien { get; set; }
+        public Guid AlienId { get; set; }
+
+        public IdentityUser<Guid> Alien { get; set; }
 
         public ApplicationStatus Status { get; set; }
+        
     }
 }
