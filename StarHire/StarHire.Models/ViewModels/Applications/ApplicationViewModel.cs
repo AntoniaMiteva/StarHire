@@ -15,7 +15,7 @@ namespace StarHire.Models.ViewModels.Applications
         public JobViewModel Job { get; set; }
 
         public Guid AlienId { get; set; }
-        public IdentityUser Alien { get; set; }
+        public IdentityUser<Guid> Alien { get; set; }
 
         public ApplicationStatus Status { get; set; }
     }

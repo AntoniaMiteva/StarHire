@@ -11,8 +11,10 @@ namespace StarHire.Models.Domain.Entities
         public Job Job { get; set; }
 
         public Guid AlienId { get; set; }
-        public IdentityUser Alien { get; set; }
+
+        public IdentityUser<Guid> Alien { get; set; }
 
         public ApplicationStatus Status { get; set; }
+        
     }
 }

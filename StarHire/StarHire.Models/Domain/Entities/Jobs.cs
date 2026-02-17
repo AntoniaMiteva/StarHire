@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StarHire.Models.Domain.Entities
 {
@@ -9,7 +10,7 @@ namespace StarHire.Models.Domain.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public string Title { get; set; }  = string.Empty;
+        public string Title { get; set; } = string.Empty;
 
         [Required]
         public string Description { get; set; } = string.Empty;
@@ -19,7 +20,8 @@ namespace StarHire.Models.Domain.Entities
         public string Planet { get; set; } = string.Empty;
 
         public Guid EmployeerId { get; set; }
-        public IdentityUser Employeer { get; set; }
+
+        public IdentityUser<Guid> Employeer { get; set; }  
 
         public ICollection<Application> Applications { get; set; } = new List<Application>();
     }
