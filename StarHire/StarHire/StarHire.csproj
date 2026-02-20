@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StarHire.Business\StarHire.Business.csproj" />
     <ProjectReference Include="..\StarHire.Data\StarHire.Data.csproj" />
+    <ProjectReference Include="..\StarHire.Models\StarHire.Models.csproj" />
   </ItemGroup>
 
 </Project>

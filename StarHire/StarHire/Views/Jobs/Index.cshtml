@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>
+@{
+     ViewData["Title"] = "Job Listings";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/JobsIndex.css" />
+    }
+<div class="jobs-wrapper">
+
+    <div class="page-header">
+        <p class="eyebrow">Galactic Opportunities</p>
+        <h1><span>Star</span>Hire</h1>
+        <div class="header-divider"></div>
+    </div>
+
+    
+    <form method="get" asp-action="Index" class="filter-bar">
+        <input type="text" name="search" value="@ViewBag.Search" placeholder="Search positions..." />
+        <input type="text" name="planet" value="@ViewBag.Planet" placeholder="Planet / location..." />
+        <input type="number" name="minSalary" value="@ViewBag.MinSalary" placeholder="Min salary $" step="100" min="0" />
+        <button type="submit" class="btn-filter">Scan ›</button>
+    </form>
+
+    @if (User.IsInRole("Employer"))
+    {
+        <div class="post-job-bar">
+            <a asp-action="Create" class="btn-post">+ Post New Job</a>
+        </div>
+    }
+
+    <div class="jobs-grid">
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <p style="font-size:2rem;margin-bottom:0.5rem;">🛸</p>
+                <p>No missions found. Try adjusting your search.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var job in Model)
+            {
+                <a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="job-card">
+                    <div class="corner-accent"></div>
+                    <div class="planet-tag">
+                        <span class="planet-dot"></span>
+                        @job.Planet
+                    </div>
+                    <h2 class="job-title-card">@job.Title</h2>
+                    <p class="job-description">@job.Description</p>
+                    <div class="card-bottom">
+                        <div class="salary-display">
+                            @job.Salary.ToString("N0")<small>₵ / cycle</small>
+                        </div>
+                        <div class="applicant-count">
+                            <span>@job.Applications.Count</span> applied
+                        </div>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.job-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+                card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,348 @@
+﻿@@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@300;400;500;600&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://static.vecteezy.com/system/resources/previews/019/847/897/non_2x/starry-night-sky-background-with-meteors-illustration-vector.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+:root {
+    --void: #03040a;
+    --deep: #080b18;
+    --panel: #0d1228;
+    --panel-hover: #111830;
+    --border: #1a2550;
+    --neon-cyan: #00f5ff;
+    --neon-purple: #b400ff;
+    --neon-yellow: #ffe600;
+    --neon-green: #00ff88;
+    --text-primary: #e8eeff;
+    --text-dim: #6b7db3;
+}
+
+
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.75rem;
+}
+
+.page-header h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem;
+    letter-spacing: 0.04em;
+}
+
+    .page-header h1 span {
+        color: transparent;
+        -webkit-text-stroke: 1px var(--neon-cyan);
+        text-shadow: none;
+    }
+
+.header-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 1.25rem auto 0;
+}
+
+/* Search / filter bar */
+.filter-bar {
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+    .filter-bar input,
+    .filter-bar select {
+        flex: 1;
+        min-width: 160px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 0.95rem;
+        padding: 0.65rem 1rem;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+        .filter-bar input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            border-color: rgba(0,245,255,0.4);
+            box-shadow: 0 0 0 3px rgba(0,245,255,0.06);
+        }
+
+        .filter-bar select option {
+            background: var(--deep);
+        }
+
+.btn-filter {
+    font-size: 1rem;
+    padding: 0.8rem 1.6rem;
+    background: transparent;
+    border: 1px solid rgba(0,245,255,0.35);
+    color: var(--neon-cyan);
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .btn-filter:hover {
+        background: rgba(0,245,255,0.08);
+        box-shadow: 0 0 14px rgba(0,245,255,0.15);
+    }
+
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.job-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    animation: fadeUp 0.5s ease both;
+    cursor: pointer;
+}
+
+    .job-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,245,255,0.04) 0%, transparent 60%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .job-card:hover::after {
+        opacity: 1;
+    }
+
+    .job-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 15%;
+        right: 15%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0,245,255,0.5), transparent);
+        opacity: 0;
+        transition: opacity 0.25s;
+    }
+
+    .job-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(0,245,255,0.25);
+        box-shadow: 0 16px 50px rgba(0,0,0,0.6), 0 0 30px rgba(0,245,255,0.05);
+        text-decoration: none;
+    }
+
+        .job-card:hover::before {
+            opacity: 1;
+        }
+
+
+.corner-accent {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 20px;
+    height: 20px;
+    border-top: 1px solid rgba(0,245,255,0.3);
+    border-right: 1px solid rgba(0,245,255,0.3);
+}
+
+.planet-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.planet-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--neon-purple);
+    box-shadow: 0 0 6px var(--neon-purple);
+}
+
+.job-title-card {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem;
+    line-height: 1.3;
+}
+
+.job-description {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+.card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.salary-display {
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    color: var(--neon-cyan);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+    .salary-display small {
+        font-size: 0.6rem;
+        opacity: 0.6;
+        margin-left: 3px;
+        vertical-align: middle;
+    }
+
+.applicant-count {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+    .applicant-count span {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+
+.empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-dim);
+}
+
+
+.post-job-bar {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-post {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--void);
+    background: var(--neon-cyan);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 0 20px rgba(0,245,255,0.3);
+}
+
+    .btn-post:hover {
+        background: #33f7ff;
+        box-shadow: 0 0 30px rgba(0,245,255,0.5);
+        color: var(--void);
+        text-decoration: none;
+    }
+
+@@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.job-card:nth-child(1) {
+    animation-delay: 0.04s;
+}
+
+.job-card:nth-child(2) {
+    animation-delay: 0.08s;
+}
+
+.job-card:nth-child(3) {
+    animation-delay: 0.12s;
+}
+
+.job-card:nth-child(4) {
+    animation-delay: 0.16s;
+}
+
+.job-card:nth-child(5) {
+    animation-delay: 0.20s;
+}
+
+.job-card:nth-child(6) {
+    animation-delay: 0.24s;
+}

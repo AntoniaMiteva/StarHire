@@ -1,0 +1,96 @@
+﻿
+@using StarHire.Models
+@model List<StarHire.Models.ViewModels.Applications.ApplicationViewModel>
+@{
+    ViewData["Title"] = "My Applications";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/MyApplications.css" />
+}
+
+<div class="applications-wrapper">
+
+    <div class="page-header">
+        <p class="eyebrow">Mission Control</p>
+        <h1>My <span>Applications</span></h1>
+        <div class="divider"></div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert-success">✓ @TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert-error">⚠ @TempData["ErrorMessage"]</div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <div class="icon">🚀</div>
+            <p>No applications yet. Launch your first mission!</p>
+            <a href="@Url.Action("Index", "Jobs")" class="btn-view">Browse Jobs</a>
+        </div>
+    }
+    else
+    {
+        var total = Model.Count();
+        /*var pending = Model.Count(a => a.Status == StarHire.Models.ViewModels.Applications.ApplicationStatus.Pending);
+        var approved = Model.Count(a => a.Status == StarHire.Models.ViewModels.Applications.ApplicationStatus.Approved);
+		var rejected = Model.Count(a => a.Status == StarHire.Models.ViewModels.Applications.ApplicationStatus.Rejected);*/
+        var pending = Model.Count(a => a.Status == ApplicationStatus.Pending);
+        var approved = Model.Count(a => a.Status == ApplicationStatus.Approved);
+        var rejected = Model.Count(a => a.Status == ApplicationStatus.Rejected);
+
+        <div class="summary-bar">
+            <div class="summary-chip"><span class="count count-total">@total</span> Total</div>
+            <div class="summary-chip"><span class="count count-pending">@pending</span> Pending</div>
+            <div class="summary-chip"><span class="count count-approved">@approved</span> Approved</div>
+            <div class="summary-chip"><span class="count count-rejected">@rejected</span> Rejected</div>
+        </div>
+
+        <div class="applications-grid">
+            @foreach (var app in Model)
+            {
+                <div class="app-card">
+                    <div class="card-top">
+                        <div class="job-title">@app.Job.Title</div>
+                        @{
+                            /*var badgeClass = app.Status switch
+                            {
+                                StarHire.Models.ViewModels.Applications.ApplicationStatus.Approved => "badge-approved",
+                                StarHire.Models.ViewModels.Applications.ApplicationStatus.Rejected => "badge-rejected",
+                                _ => "badge-pending"
+							};*/
+                            var badgeClass = app.Status switch
+                            {
+                                ApplicationStatus.Approved => "badge-approved",
+                                ApplicationStatus.Rejected => "badge-rejected",
+                                _ => "badge-pending"
+                            };
+                        }
+                        <span class="status-badge @badgeClass">@app.Status</span>
+                    </div>
+
+                    <div class="card-meta">
+                        <div class="meta-row">
+                            <span class="label">Planet</span>
+                            <span class="value">🪐 @app.Job.Planet</span>
+                        </div>
+                        <div class="meta-row">
+                            <span class="label">Salary</span>
+                            <span class="salary-value">@app.Job.Salary.ToString("N0") ₵</span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a href="@Url.Action("Details", "Jobs", new { id = app.JobId })" class="btn-view">
+                            View Posting →
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,104 @@
+﻿@model StarHire.Models.ViewModels.Jobs.CreateJobViewModel
+@{
+    ViewData["Title"] = "Post a Job";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/JobsCreate.css" />
+    
+}
+<div class="create-wrapper">
+
+    <a href="@Url.Action("Index", "Jobs")" class="back-link">← Back to listings</a>
+
+    <div class="page-header">
+        <p class="eyebrow">Employer Console</p>
+        <h1>Post a <span>New Mission</span></h1>
+        <div class="header-divider"></div>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Create" method="post" id="createJobForm">
+            @Html.AntiForgeryToken()
+
+            <div class="form-body">
+                <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+                <div class="field-group">
+                    <label asp-for="Title">Job Title <span class="required-star">*</span></label>
+                    <input asp-for="Title" placeholder="e.g. Quantum Engineer, Warp Drive Technician..." autocomplete="off" />
+                    <span asp-validation-for="Title" class="validation-message"></span>
+                </div>
+
+                <div class="field-group">
+                    <label asp-for="Description">Mission Description <span class="required-star">*</span></label>
+                    <textarea asp-for="Description" placeholder="Describe the role, responsibilities, and what you're looking for in a candidate..."></textarea>
+                    <span asp-validation-for="Description" class="validation-message"></span>
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label asp-for="Salary">Salary (₵) <span class="required-star">*</span></label>
+                        <input asp-for="Salary" type="number" min="0" step="100" placeholder="e.g. 50000" />
+                        <span asp-validation-for="Salary" class="validation-message"></span>
+                    </div>
+
+                    <div class="field-group">
+                        <label asp-for="Planet">Planet / Location <span class="required-star">*</span></label>
+                        <input asp-for="Planet" placeholder="e.g. Mars, Europa, Titan..." autocomplete="off" />
+                        <span asp-validation-for="Planet" class="validation-message"></span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="form-progress">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="form-footer">
+                <a href="@Url.Action("Index", "Jobs")" class="btn-cancel">Cancel</a>
+                <button type="submit" class="btn-submit">Launch Posting →</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const fields = ['Title', 'Description', 'Salary', 'Planet'];
+        const progressFill = document.getElementById('progressFill');
+
+        function updateProgress() {
+            const filled = fields.filter(f => {
+                const el = document.getElementById(f);
+                return el && el.value.trim() !== '';
+            }).length;
+            progressFill.style.width = (filled / fields.length * 100) + '%';
+        }
+
+        fields.forEach(fieldName => {
+            const el = document.getElementById(fieldName);
+            if (!el) return;
+
+            el.addEventListener('input', () => {
+                el.classList.remove('input-valid', 'input-error');
+                if (el.value.trim()) el.classList.add('input-valid');
+                updateProgress();
+            });
+
+            el.addEventListener('blur', () => {
+                el.classList.remove('input-valid', 'input-error');
+                if (!el.value.trim()) {
+                    el.classList.add('input-error');
+                } else {
+                    el.classList.add('input-valid');
+                }
+            });
+        });
+
+        updateProgress();
+    </script>
+}
+
