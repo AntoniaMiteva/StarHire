@@ -1,0 +1,111 @@
+﻿
+@model StarHire.Models.ViewModels.Jobs.JobViewModel
+@{
+    ViewData["Title"] = "Jobs Details";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/JobsDetails.css" />
+    }
+
+<div class="details-wrapper">
+    <a href="@Url.Action("Index", "Jobs")" class="back-link">← Back to listings</a>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert-success">✓ @TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert-error">⚠ @TempData["ErrorMessage"]</div>
+    }
+
+    <div class="content-grid">
+
+       
+        <div class="main-panel">
+            <div class="panel-hero">
+                <div class="hero-meta">
+                    <span class="planet-chip">@Model.Planet</span>
+                    <span class="applicant-chip"><strong>@Model.Applications.Count</strong>&nbsp;applicants</span>
+                </div>
+                <h1 class="job-detail-title">@Model.Title</h1>
+                @if (Model.Employeer != null)
+                {
+                    <p class="posted-by">Posted by <span>@Model.Employeer.UserName</span></p>
+                }
+                <div class="salary-hero">
+                    <span class="salary-amount">@Model.Salary.ToString("N0")</span>
+                    <span class="salary-unit">₵ per cycle</span>
+                </div>
+            </div>
+
+            <div class="description-section">
+                <p class="section-label">Mission Brief</p>
+                <div class="description-text">@Model.Description</div>
+            </div>
+        </div>
+
+        
+        <div class="sidebar">
+            @if (User.Identity!.IsAuthenticated && !User.IsInRole("Employer"))
+            {
+                var alreadyApplied = Model.Applications.Any(a => a.Alien?.UserName == User.Identity.Name);
+
+                <div class="side-panel">
+                    <h3>Apply for Mission</h3>
+
+                    @if (alreadyApplied)
+                    {
+                        <div class="already-applied">
+                            ✓ You've already applied for this position
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-action="Apply" asp-controller="Applications" method="post" class="apply-form">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="jobId" value="@Model.Id" />
+                            <textarea name="message" placeholder="Optional: introduce yourself or add a note to the employer..."></textarea>
+                            <p class="form-hint">This message will be visible to the employer.</p>
+                            <button type="submit" class="btn-apply">Launch Application →</button>
+                        </form>
+                    }
+                </div>
+            }
+            else if (!User.Identity!.IsAuthenticated)
+            {
+                <div class="side-panel">
+                    <h3>Ready to Apply?</h3>
+                    <p class="login-prompt">
+                        <a asp-area="Identity" asp-page="/Account/Login">Sign in</a> or
+                        <a asp-area="Identity" asp-page="/Account/Register">register</a>
+                        to apply for this position.
+                    </p>
+                </div>
+            }
+
+            
+            <div class="side-panel">
+                <h3>Mission Details</h3>
+                <div style="display:flex;flex-direction:column;gap:0.85rem;">
+                    <div style="display:flex;justify-content:space-between;font-size:0.9rem;">
+                        <span style="color:var(--text-dim);">Location</span>
+                        <span style="color:var(--text-primary);">@Model.Planet</span>
+                    </div>
+                    <div style="height:1px;background:var(--border);"></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.9rem;">
+                        <span style="color:var(--text-dim);">Compensation</span>
+                        <span style="color:var(--neon-cyan);font-family:'Orbitron',monospace;font-size:0.85rem;">@Model.Salary.ToString("N0") ₵</span>
+                    </div>
+                    <div style="height:1px;background:var(--border);"></div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.9rem;">
+                        <span style="color:var(--text-dim);">Applicants</span>
+                        <span style="color:var(--text-primary);">@Model.Applications.Count</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

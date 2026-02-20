@@ -20,7 +20,7 @@ public class ApplicationService : IApplicationService
         _mapper = mapper;
     }
 
-    public async Task ApplyAsync(Guid jobId, string userId, string message)
+    public async Task ApplyAsync(Guid jobId, Guid userId, string message)
     {
         var alreadyApplied = await _applicationRepository.Query()
             .AnyAsync(a => a.JobId == jobId && a.AlienId == userId);
@@ -46,7 +46,27 @@ public class ApplicationService : IApplicationService
         await _applicationRepository.CommitAsync();
     }
 
-    public async Task<List<ApplicationViewModel>> GetMyApplicationsAsync(string userId)
+   /* public async Task<List<ApplicationViewModel>> GetMyApplicationsAsync(string userId)
+    {
+        /*var applications = await _applicationRepository.Query()
+            .Include(a => a.Job)
+            .Where(a => a.AlienId == Guid.Parse(userId))
+            .ToListAsync();*/
+
+        // for safety, we should validate the userId format before parsing it to Guid ig?
+       /* if (!Guid.TryParse(userId, out var alienGuid))
+            throw new ArgumentException("Invalid userId format");
+
+        var applications = await _applicationRepository.Query()
+            .Include(a => a.Job)
+            .Where(a => a.AlienId == alienGuid)
+            .ToListAsync();
+
+        return _mapper.Map<List<ApplicationViewModel>>(applications);
+
+    }*/
+
+    public async Task<List<ApplicationViewModel>> GetMyApplicationsAsync(Guid userId)
     {
         var applications = await _applicationRepository.Query()
             .Include(a => a.Job)
