@@ -4,7 +4,21 @@ html, body {
     height: 100%;
     margin: 0;
 }
+header {
+    position: relative;
+    z-index: 100;
+}
 
+    header .navbar {
+        background: rgba(5, 5, 20, 0.85) !important;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(100, 100, 255, 0.3) !important;
+    }
+
+        header .navbar .nav-link,
+        header .navbar .navbar-brand {
+            color: #e0e8ff !important;
+        }
 body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/photos/StarHireBackground.png");
     background-position: center;
