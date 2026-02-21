@@ -1,0 +1,207 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@300;400;500;600&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+header {
+    position: relative;
+    z-index: 100;
+}
+
+    header .navbar {
+        background: rgba(5, 5, 20, 0.85) !important;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(100, 100, 255, 0.3) !important;
+    }
+
+        header .navbar .nav-link,
+        header .navbar .navbar-brand {
+            color: #e0e8ff !important;
+        }
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/photos/StarHireBackground.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+:root {
+    --void: #03040a;
+    --deep: #080b18;
+    --panel: #0d1228;
+    --border: #1a2550;
+    --neon-cyan: #00f5ff;
+    --neon-purple: #b400ff;
+    --text-primary: #e8eeff;
+    --text-dim: #6b7db3;
+}
+
+
+.privacy-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+}
+
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.75rem;
+}
+
+.page-header h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: 0.05em;
+    transform: none;
+}
+
+    .page-header h1 span {
+        color: transparent;
+        -webkit-text-stroke: 1px var(--neon-cyan);
+    }
+
+.header-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 1.25rem auto 1rem;
+}
+
+.last-updated {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+
+.privacy-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2.8rem;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+}
+
+    .privacy-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 10%;
+        right: 10%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    }
+
+
+.corner-accent {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    border-top: 1px solid rgba(0,245,255,0.35);
+    border-right: 1px solid rgba(0,245,255,0.35);
+}
+
+
+.policy-section {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 1.8rem 0;
+}
+
+.section-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--neon-cyan);
+    opacity: 0.4;
+    letter-spacing: 0.1em;
+    min-width: 28px;
+    padding-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.section-content h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 0.85rem;
+}
+
+.section-content p {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+    margin: 0;
+}
+
+.section-content a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+    .section-content a:hover {
+        opacity: 0.75;
+    }
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 560px) {
+    .privacy-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .policy-section {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .section-number {
+        font-size: 0.6rem;
+    }
+}
