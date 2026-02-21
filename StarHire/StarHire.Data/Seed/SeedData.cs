@@ -113,6 +113,34 @@ public static class SeedData
             await db.SaveChangesAsync();
         }
 
+        //Seed demo skills
+        if (!await db.Skills.AnyAsync())
+        {
+            db.Skills.AddRange(
+                new Skill { Id = Guid.NewGuid(), Name = "Piloting" },
+                new Skill { Id = Guid.NewGuid(), Name = "Engineering" },
+                new Skill { Id = Guid.NewGuid(), Name = "Mining" },
+                new Skill { Id = Guid.NewGuid(), Name = "Trading" },
+                new Skill { Id = Guid.NewGuid(), Name = "Repair" },
+                new Skill { Id = Guid.NewGuid(), Name = "Navigation" },
 
+                new Skill { Id = Guid.NewGuid(), Name = "Astro Navigation" },
+                new Skill { Id = Guid.NewGuid(), Name = "Robotics" },
+                new Skill { Id = Guid.NewGuid(), Name = "AI Programming" },
+                new Skill { Id = Guid.NewGuid(), Name = "Cybersecurity" },
+                new Skill { Id = Guid.NewGuid(), Name = "Terraforming" },
+                new Skill { Id = Guid.NewGuid(), Name = "Quantum Mechanics" },
+                new Skill { Id = Guid.NewGuid(), Name = "Astrophysics" },
+                new Skill { Id = Guid.NewGuid(), Name = "Diplomacy" },
+                new Skill { Id = Guid.NewGuid(), Name = "Alien Communication" },
+                new Skill { Id = Guid.NewGuid(), Name = "Laser Weapon Handling" },
+                new Skill { Id = Guid.NewGuid(), Name = "Ship Repair" },
+                new Skill { Id = Guid.NewGuid(), Name = "Logistics" },
+                new Skill { Id = Guid.NewGuid(), Name = "Medical Training" },
+                new Skill { Id = Guid.NewGuid(), Name = "Exploration" }
+            );
+
+            await db.SaveChangesAsync();
+        }
     }
 }

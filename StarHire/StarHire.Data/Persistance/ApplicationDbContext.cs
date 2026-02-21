@@ -37,7 +37,23 @@ namespace StarHire.Data
                 .WithMany()
                 .HasForeignKey(a => a.AlienId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserSkill>()
+                .HasKey(us => new { us.UserId, us.SkillId });
+
+            modelBuilder.Entity<UserSkill>()
+                .HasOne(us => us.User)
+                .WithMany()
+                .HasForeignKey(us => us.UserId);
+
+            modelBuilder.Entity<UserSkill>()
+                .HasOne(us => us.Skill)
+                .WithMany(s => s.UserSkills)
+                .HasForeignKey(us => us.SkillId);
         }
-        }
+
+        public DbSet<Skill> Skills { get; set; } = null!;
+        public DbSet<UserSkill> UserSkills { get; set; } = null!;
     }
+ }
 
