@@ -50,6 +50,10 @@ namespace StarHire.Data
                 .HasOne(us => us.Skill)
                 .WithMany(s => s.UserSkills)
                 .HasForeignKey(us => us.SkillId);
+
+            modelBuilder.Entity<Skill>()
+                .HasIndex(s => s.NormalizedName)
+                .IsUnique();
         }
 
         public DbSet<Skill> Skills { get; set; } = null!;

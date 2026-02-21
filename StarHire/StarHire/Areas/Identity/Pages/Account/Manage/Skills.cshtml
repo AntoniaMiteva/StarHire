@@ -1,0 +1,64 @@
+﻿@page
+@model StarHire.Areas.Identity.Pages.Account.Manage.SkillsModel
+@{
+    ViewData["Title"] = "Skills";
+    ViewData["ActivePage"] = ManageNavPages.Skills;
+}
+
+<h3>Skills</h3>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">✓ @TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">⚠ @TempData["ErrorMessage"]</div>
+}
+
+<div class="mb-3">
+    <h5>My skills</h5>
+
+    @if (!Model.MySkills.Any())
+    {
+        <p>No skills yet. Add your first one.</p>
+    }
+    else
+    {
+        <div class="d-flex flex-wrap gap-2">
+            @foreach (var s in Model.MySkills)
+            {
+                <form method="post" asp-page-handler="Remove">
+                    <input type="hidden" name="skillName" value="@s" />
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">
+                        @s ✕
+                    </button>
+                </form>
+            }
+        </div>
+    }
+</div>
+
+<hr />
+
+<div class="mb-3">
+    <h5>Add skill</h5>
+
+    <form method="post" asp-page-handler="Add" class="d-flex gap-2">
+        <input class="form-control"
+               name="SkillName"
+               list="allSkills"
+               placeholder="Type a skill (or create new)..." />
+
+        <datalist id="allSkills">
+            @foreach (var s in Model.AllSkills)
+            {
+                <option value="@s"></option>
+            }
+        </datalist>
+
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+    <small class="text-muted">You can type a brand new skill and it will be created.</small>
+</div>
