@@ -1,0 +1,28 @@
+﻿@model StarHire.Models.ViewModels.Skills.ProfileSkillsViewModel
+
+<div class="container py-5">
+    <h2 class="text-white mb-4">My Skills</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <form method="post">
+        <div class="row">
+            @for (int i = 0; i < Model.Skills.Count; i++)
+            {
+                <div class="col-md-4 mb-3">
+                    <label class="text-white">
+                        <input type="hidden" asp-for="Skills[i].Id" />
+                        <input type="hidden" asp-for="Skills[i].Name" />
+                        <input asp-for="Skills[i].IsSelected" />
+                        @Model.Skills[i].Name
+                    </label>
+                </div>
+            }
+        </div>
+
+        <button class="btn btn-info mt-3">Save</button>
+    </form>
+</div>

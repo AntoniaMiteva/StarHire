@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StarHire.Business.Repositories.Implementations;
 using StarHire.Business.Repositories.Interfaces;
+using StarHire.Business.Services.Implementation;
 using StarHire.Business.Services.Interfaces;
 using StarHire.Data;
 using StarHire.Services;
@@ -30,6 +31,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IApplicationService, ApplicationService>();
 builder.Services.AddTransient<IJobService, JobService>();
+builder.Services.AddTransient<ISkillService, SkillService>();
+
 
 var app = builder.Build();
 
