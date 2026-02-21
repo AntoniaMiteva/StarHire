@@ -1,0 +1,347 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@300;400;500;600&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+header {
+    position: relative;
+    z-index: 100;
+}
+
+    header .navbar {
+        background: rgba(5, 5, 20, 0.85) !important;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(100, 100, 255, 0.3) !important;
+    }
+
+        header .navbar .nav-link,
+        header .navbar .navbar-brand {
+            color: #e0e8ff !important;
+        }
+
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/photos/StarHireBackground.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+:root {
+    --void: #03040a;
+    --deep: #080b18;
+    --panel: #0d1228;
+    --panel-hover: #111830;
+    --border: #1a2550;
+    --neon-cyan: #00f5ff;
+    --neon-purple: #b400ff;
+    --neon-yellow: #ffe600;
+    --neon-green: #00ff88;
+    --neon-red: #ff2d6b;
+    --text-primary: #e8eeff;
+    --text-dim: #6b7db3;
+}
+
+/* ── Page wrapper ── */
+.auth-wrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* ── Auth card ── */
+.auth-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.8rem 2.5rem;
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+}
+
+    /* top cyan line */
+    .auth-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 10%;
+        right: 10%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    }
+
+    /* corner accent */
+    .auth-card::after {
+        content: '';
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 22px;
+        height: 22px;
+        border-top: 1px solid rgba(0,245,255,0.35);
+        border-right: 1px solid rgba(0,245,255,0.35);
+    }
+
+/* ── Header ── */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.2rem;
+}
+
+.auth-eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.5em;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 0.6rem;
+}
+
+.auth-header h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: 0.05em;
+    transform: none;
+}
+
+    .auth-header h1 span {
+        color: transparent;
+        -webkit-text-stroke: 1px var(--neon-cyan);
+    }
+
+.auth-divider {
+    width: 70px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 1rem auto 0;
+}
+
+/* ── Form fields ── */
+.form-group {
+    margin-bottom: 1.3rem;
+}
+
+.form-label {
+    display: block;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+    .form-control::placeholder {
+        color: var(--text-dim);
+    }
+
+    .form-control:focus {
+        border-color: rgba(0,245,255,0.45);
+        box-shadow: 0 0 0 3px rgba(0,245,255,0.07);
+    }
+
+/* ── Validation errors ── */
+.field-validation-error,
+.text-danger {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--neon-red);
+    margin-top: 0.35rem;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.validation-summary-errors {
+    background: rgba(255,45,107,0.08);
+    border: 1px solid rgba(255,45,107,0.3);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.4rem;
+    color: var(--neon-red);
+    font-size: 0.88rem;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* ── Remember me / checkbox ── */
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+}
+
+    .check-row input[type="checkbox"] {
+        accent-color: var(--neon-cyan);
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+
+    .check-row label {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 0.92rem;
+        color: var(--text-dim);
+        cursor: pointer;
+    }
+
+/* ── Submit button ── */
+.btn-auth {
+    width: 100%;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--void);
+    background: var(--neon-cyan);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 22px rgba(0,245,255,0.28);
+    margin-bottom: 1.5rem;
+}
+
+    .btn-auth:hover {
+        background: #33f7ff;
+        box-shadow: 0 0 36px rgba(0,245,255,0.5);
+    }
+
+/* ── Footer link ── */
+.auth-footer {
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    padding-top: 1.4rem;
+}
+
+    .auth-footer a {
+        color: var(--neon-cyan);
+        text-decoration: none;
+        transition: opacity 0.2s;
+    }
+
+        .auth-footer a:hover {
+            opacity: 0.75;
+            text-decoration: none;
+        }
+
+/* ── Forgot password link ── */
+.forgot-link {
+    display: block;
+    text-align: right;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-top: -0.8rem;
+    margin-bottom: 1.4rem;
+    transition: color 0.2s;
+}
+
+    .forgot-link:hover {
+        color: var(--neon-cyan);
+    }
+
+/* ── External login divider ── */
+.external-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.4rem 0 1rem;
+}
+
+    .external-divider::before,
+    .external-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+    }
+
+    .external-divider span {
+        font-family: 'Orbitron', monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        white-space: nowrap;
+    }
+
+/* ── External login buttons ── */
+.btn-external {
+    width: 100%;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    background: transparent;
+    border: 1px solid rgba(0,245,255,0.3);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 0.5rem;
+}
+
+    .btn-external:hover {
+        background: rgba(0,245,255,0.07);
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 14px rgba(0,245,255,0.12);
+    }
+
+/* ── Confirmation pages (ForgotPasswordConfirmation, ResetPasswordConfirmation) ── */
+.confirm-icon {
+    text-align: center;
+    font-size: 2.8rem;
+    margin: 0.5rem 0 1.2rem;
+    filter: drop-shadow(0 0 12px rgba(0,245,255,0.4));
+    color: var(--neon-cyan);
+}
+
+.confirm-message {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

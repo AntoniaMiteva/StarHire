@@ -6,40 +6,37 @@
     <link rel="stylesheet" href="~/css/HomeIndex.css" />
 }
 
-<!-- Galaxy Background -->
+
 <canvas id="galaxyCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background:#000;"></canvas>
 
-<!-- Planet LEFT (larger) -->
+
 <div id="planetLeft" style="position:fixed;left:4%;top:8%;width:240px;height:240px;z-index:2;pointer-events:none;"></div>
 
-<!-- Planet RIGHT (smaller) -->
+
 <div id="planetRight" style="position:fixed;right:4%;bottom:5%;width:160px;height:160px;z-index:2;pointer-events:none;"></div>
 
-<!-- Page Content -->
 <div class="text-center" style="position:relative;z-index:1;color:white;padding-top:18vh;">
     <h1 id="mainTitle" class="display-4" style="font-family:'Orbitron',sans-serif;font-weight:800;letter-spacing:4px;">Welcome to</h1>
     <h1 id="mainTitle" class="display-4" style="font-family:'Orbitron',sans-serif;font-weight:800;letter-spacing:4px;">STARHIRE</h1>
 </div>
 
-<!-- 3D Alien — positioned dynamically below h1 -->
+
 <div id="alienContainer" style="position:absolute;left:50%;transform:translateX(-50%);width:260px;height:300px;z-index:2;pointer-events:none;"></div>
 
 <script>
-    // Position alien below the h1 with a gap
+   
     function positionAlien() {
         const title = document.getElementById('mainTitle');
         const alien = document.getElementById('alienContainer');
         const rect  = title.getBoundingClientRect();
-        const gap   = 32; // px gap between h1 bottom and alien top
+        const gap   = 32; 
         alien.style.top = (window.scrollY + rect.bottom + gap) + 'px';
     }
     window.addEventListener('load',   positionAlien);
     window.addEventListener('resize', positionAlien);
 </script>
 
-<!-- ═══════════════════════════════════════════════
-     GALAXY BACKGROUND SCRIPT
-════════════════════════════════════════════════ -->
+
 <script>
     (function () {
         const canvas = document.getElementById('galaxyCanvas');
@@ -119,14 +116,10 @@
     })();
 </script>
 
-<!-- ═══════════════════════════════════════════════
-     THREE.JS — 3D CUTE ALIEN
-════════════════════════════════════════════════ -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<!-- ═══════════════════════════════════════════════
-     PLANETS
-════════════════════════════════════════════════ -->
+
 <script>
     function createPlanet(containerId, opts) {
         const container = document.getElementById(containerId);
@@ -147,7 +140,7 @@
         camera.position.set(0, 0, 5);
         camera.lookAt(0, 0, 0);
 
-        // Lights
+      
         scene.add(new THREE.AmbientLight(0x0a1020, 2.0));
         const sun = new THREE.DirectionalLight(0xffeedd, 3.8);
         sun.position.set(-4, 3, 4);
@@ -157,20 +150,20 @@
         rim.position.set(3, -2, -4);
         scene.add(rim);
 
-        // ── Planet body ────────────────────────────────
+        
         const planetGeo = new THREE.SphereGeometry(1.55, 64, 64);
 
-        // Build a procedural texture using canvas
+        
         const texSize = 512;
         const texCanvas = document.createElement('canvas');
         texCanvas.width = texCanvas.height = texSize;
         const tc = texCanvas.getContext('2d');
 
-        // Background base colour
+        
         tc.fillStyle = opts.baseColor;
         tc.fillRect(0, 0, texSize, texSize);
 
-        // Horizontal bands
+        
         opts.bands.forEach(b => {
             const y = b.y * texSize, h = b.h * texSize;
             const grad = tc.createLinearGradient(0, y - h * 0.3, 0, y + h * 1.3);
@@ -182,7 +175,7 @@
             tc.fillRect(0, y - h * 0.5, texSize, h * 2);
         });
 
-        // Noise swirls
+        
         for (let i = 0; i < 800; i++) {
             const x = Math.random() * texSize;
             const y = Math.random() * texSize;
@@ -193,7 +186,7 @@
             tc.fill();
         }
 
-        // Storm spot (if specified)
+        
         if (opts.storm) {
             const sx = opts.storm.x * texSize, sy = opts.storm.y * texSize;
             const sg = tc.createRadialGradient(sx, sy, 0, sx, sy, opts.storm.r * texSize);
@@ -217,7 +210,7 @@
         planet.receiveShadow = true;
         scene.add(planet);
 
-        // ── Atmosphere glow (additive sphere slightly larger) ───
+        
         const atmGeo = new THREE.SphereGeometry(1.62, 32, 32);
         const atmMat = new THREE.MeshStandardMaterial({
             color: opts.atmColor,
@@ -228,10 +221,10 @@
         });
         scene.add(new THREE.Mesh(atmGeo, atmMat));
 
-        // ── Rings (optional) ─────────────────────────
+        
         if (opts.rings) {
             const ringGeo = new THREE.RingGeometry(2.0, 3.2, 64);
-            // fix UVs so texture maps radially
+            
             const pos = ringGeo.attributes.position;
             const uv  = ringGeo.attributes.uv;
             for (let i = 0; i < pos.count; i++) {
@@ -240,7 +233,7 @@
                 uv.setXY(i, (r - 2.0) / 1.2, 0.5);
             }
 
-            // ring canvas texture
+            
             const rc = document.createElement('canvas');
             rc.width = 256; rc.height = 4;
             const rctx = rc.getContext('2d');
@@ -264,20 +257,20 @@
             scene.add(ring);
         }
 
-        // ── Animate ──────────────────────────────────
+        
         let t = 0;
         function animate() {
             requestAnimationFrame(animate);
             t += 0.008;
             planet.rotation.y += opts.spinSpeed || 0.003;
-            // Gentle float
+            
             planet.position.y = Math.sin(t * (opts.floatSpeed || 0.7)) * 0.06;
             renderer.render(scene, camera);
         }
         animate();
     }
 
-    // ── Left planet: large gas giant, warm orange/brown, no rings ──
+    
     createPlanet('planetLeft', {
         baseColor: '#8B4513',
         bands: [
@@ -294,7 +287,7 @@
         floatSpeed: 0.6,
     });
 
-    // ── Right planet: smaller ice world, blue-purple, no rings ──
+    
     createPlanet('planetRight', {
         baseColor: '#1a2a5a',
         bands: [
@@ -316,7 +309,7 @@
         const container = document.getElementById('alienContainer');
         const W = container.clientWidth, H = container.clientHeight;
 
-        // ── Renderer ──────────────────────────────────
+        
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(W, H);
@@ -326,17 +319,16 @@
         renderer.toneMappingExposure = 1.1;
         container.appendChild(renderer.domElement);
 
-        // ── Scene & Camera ────────────────────────────
+       
         const scene  = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(42, W / H, 0.1, 100);
         camera.position.set(0, 0.4, 7);
         camera.lookAt(0, 0.3, 0);
 
-        // ── Lights ────────────────────────────────────
-        // Deep-space ambient — dark blue keeps shadow areas from going pure black
+        
         scene.add(new THREE.AmbientLight(0x0a1a2e, 2.5));
 
-        // Key light — cool white from upper-left, strong, casts crisp soft shadows
+       
         const key = new THREE.DirectionalLight(0xd0eeff, 3.5);
         key.position.set(-3, 6, 5);
         key.castShadow = true;
@@ -352,22 +344,22 @@
         key.shadow.radius = 3;
         scene.add(key);
 
-        // Fill light — warm green tint from right, softens shadow side
+        
         const fill = new THREE.DirectionalLight(0x88ffcc, 1.2);
         fill.position.set(4, 1, 3);
         scene.add(fill);
 
-        // Rim light — purple, carves the alien out from the dark background
+        
         const rimLight = new THREE.DirectionalLight(0x8855ff, 1.8);
         rimLight.position.set(1, 4, -6);
         scene.add(rimLight);
 
-        // Under-glow — faint warm green from below, bioluminescent feel
+        
         const underLight = new THREE.PointLight(0x33ffaa, 0.9, 6);
         underLight.position.set(0, -2.5, 1);
         scene.add(underLight);
 
-        // Eye glow point lights — hot pink to match iris
+        
         const eyeGlowL = new THREE.PointLight(0xff44aa, 1.8, 2.5);
         eyeGlowL.position.set(-0.32, 0.55, 0.95);
         scene.add(eyeGlowL);
@@ -375,7 +367,7 @@
         eyeGlowR.position.set(0.32, 0.55, 0.95);
         scene.add(eyeGlowR);
 
-        // ── Invisible shadow-receiving plane ──────────
+       
         const shadowPlane = new THREE.Mesh(
             new THREE.PlaneGeometry(10, 10),
             new THREE.ShadowMaterial({ opacity: 0.35, transparent: true })
@@ -385,51 +377,50 @@
         shadowPlane.receiveShadow = true;
         scene.add(shadowPlane);
 
-        // ── Materials — vibrant multi-color alien ─────
-        // Body: rich purple-violet
+        
         const skinMat = new THREE.MeshStandardMaterial({
             color: 0x9b5de5, metalness: 0.08, roughness: 0.38,
         });
-        // Joints / ears: deeper indigo-purple
+        
         const darkSkinMat = new THREE.MeshStandardMaterial({
             color: 0x6a0dad, metalness: 0.06, roughness: 0.62,
         });
-        // Belly: warm peach-orange, soft and glowing
+        
         const bellyMat = new THREE.MeshStandardMaterial({
             color: 0xff9f6b, metalness: 0.0, roughness: 0.28,
             emissive: 0xff6600, emissiveIntensity: 0.1,
         });
-        // Eye whites — icy blue-white, glossy
+        
         const eyeWhiteMat = new THREE.MeshStandardMaterial({
             color: 0xe8f4ff, metalness: 0.15, roughness: 0.04,
             emissive: 0x99ccff, emissiveIntensity: 0.25,
         });
-        // Iris — hot pink glowing
+        
         const irisMat = new THREE.MeshStandardMaterial({
             color: 0xff44aa, metalness: 0.25, roughness: 0.08,
             emissive: 0xff44aa, emissiveIntensity: 1.6,
         });
         const pupilMat = new THREE.MeshStandardMaterial({ color: 0x0a0015, roughness: 0.9 });
-        // Mouth: dark plum
+       
         const mouthMat = new THREE.MeshStandardMaterial({ color: 0x4a0033, roughness: 0.8, metalness: 0.02 });
-        // Antenna stem: bright cyan-teal
+        
         const antennaMat = new THREE.MeshStandardMaterial({ color: 0x00d4ff, metalness: 0.2, roughness: 0.38 });
-        // Antenna tip: glowing lime green
+        
         const antennaTipMat = new THREE.MeshStandardMaterial({
             color: 0x39ff14, emissive: 0x39ff14, emissiveIntensity: 2.5,
             metalness: 0.3, roughness: 0.12,
         });
-        // Spots: bright yellow-gold
+        
         const spotsMat = new THREE.MeshStandardMaterial({
             color: 0xffd700, emissive: 0xffaa00, emissiveIntensity: 0.5,
             metalness: 0.15, roughness: 0.4,
         });
-        // Blush: soft rose pink
+       
         const blushMat = new THREE.MeshStandardMaterial({
             color: 0xff88bb, transparent: true, opacity: 0.35, roughness: 0.95,
         });
 
-        // ── Helper: add mesh ───────────────────────────
+        
         function add(geo, mat, parent, x=0, y=0, z=0, rx=0, ry=0, rz=0, sx=1, sy=1, sz=1) {
             const m = new THREE.Mesh(geo, mat);
             m.position.set(x, y, z);
@@ -441,38 +432,37 @@
             return m;
         }
 
-        // ── Alien Group ───────────────────────────────
+        
         const alien = new THREE.Group();
         scene.add(alien);
 
-        // ── BODY ──────────────────────────────────────
+        
         add(new THREE.SphereGeometry(1, 32, 32),      skinMat,  alien, 0,-0.5,0, 0,0,0, 1,1.15,0.9);
         add(new THREE.SphereGeometry(0.62, 32, 24),   bellyMat, alien, 0,-0.45,0.72, 0,0,0, 1,1.1,0.35);
-        // Body spots
+        
         const spotGeo = new THREE.SphereGeometry(0.12, 16, 16);
         add(spotGeo, spotsMat, alien,  0.6, -0.1,  0.7,  0,0,0, 1,1,0.4);
         add(spotGeo, spotsMat, alien, -0.55,-0.3,  0.72, 0,0,0, 1,1,0.4);
         add(spotGeo, spotsMat, alien,  0.2, -0.85, 0.68, 0,0,0, 1,1,0.4);
 
-        // ── HEAD ──────────────────────────────────────
+        
         add(new THREE.SphereGeometry(0.95, 32, 32), skinMat, alien, 0,1.0,0, 0,0,0, 1.05,1,1);
-        // Big forehead cranium bump
+        
         add(new THREE.SphereGeometry(0.7, 32, 32),  skinMat, alien, 0,1.75,-0.15, 0,0,0, 1,0.65,0.9);
 
-        // ── EYES ──────────────────────────────────────
         const eyeGeo   = new THREE.SphereGeometry(0.28, 24, 24);
         const irisGeo  = new THREE.SphereGeometry(0.18, 20, 20);
         const pupilGeo = new THREE.SphereGeometry(0.1,  16, 16);
-        // Left
+        
         add(eyeGeo,   eyeWhiteMat, alien, -0.33, 1.08, 0.78, 0,0, 0.25, 1.05,0.75,0.5);
         add(irisGeo,  irisMat,     alien, -0.33, 1.07, 0.97, 0,0, 0.25, 1,0.75,0.25);
         add(pupilGeo, pupilMat,    alien, -0.33, 1.07, 1.0,  0,0, 0.25, 1,0.75,0.2);
-        // Right
+        
         add(eyeGeo,   eyeWhiteMat, alien,  0.33, 1.08, 0.78, 0,0,-0.25, 1.05,0.75,0.5);
         add(irisGeo,  irisMat,     alien,  0.33, 1.07, 0.97, 0,0,-0.25, 1,0.75,0.25);
         add(pupilGeo, pupilMat,    alien,  0.33, 1.07, 1.0,  0,0,-0.25, 1,0.75,0.2);
 
-        // ── SMILE ─────────────────────────────────────
+        
         const smile = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.045, 12, 24, Math.PI * 0.75), mouthMat);
         smile.position.set(0, 0.68, 0.88);
         smile.rotation.set(0.1, 0, Math.PI + 0.2);
@@ -480,17 +470,17 @@
         smile.receiveShadow = true;
         alien.add(smile);
 
-        // Cheek blush
+        
         const blushGeo = new THREE.SphereGeometry(0.14, 16, 16);
         add(blushGeo, blushMat, alien, -0.52, 0.78, 0.78, 0,0,0, 1,0.5,0.3);
         add(blushGeo, blushMat, alien,  0.52, 0.78, 0.78, 0,0,0, 1,0.5,0.3);
 
-        // ── EARS ──────────────────────────────────────
+        
         const earGeo = new THREE.SphereGeometry(0.22, 16, 16);
         add(earGeo, darkSkinMat, alien, -0.93, 1.0, 0.05, 0,0,0, 0.7,0.8,0.7);
         add(earGeo, darkSkinMat, alien,  0.93, 1.0, 0.05, 0,0,0, 0.7,0.8,0.7);
 
-        // ── ANTENNAS ──────────────────────────────────
+        
         const antStemGeo = new THREE.CylinderGeometry(0.04, 0.055, 0.7, 12);
         const antTipGeo  = new THREE.SphereGeometry(0.1, 16, 16);
 
@@ -508,13 +498,12 @@
         add(antStemGeo, antennaMat,    antR, 0, 0.35, 0);
         add(antTipGeo,  antennaTipMat, antR, 0, 0.75, 0);
 
-        // ── ARMS ──────────────────────────────────────
+        
         const upperArmGeo = new THREE.SphereGeometry(0.22, 16, 16);
         const foreArmGeo  = new THREE.CylinderGeometry(0.15, 0.12, 0.55, 14);
         const handGeo     = new THREE.SphereGeometry(0.18, 16, 16);
         const fingerGeo   = new THREE.SphereGeometry(0.07, 10, 10);
 
-        // Left arm (raised — waving)
         const armLG = new THREE.Group();
         armLG.position.set(-1.05, 0.0, 0.1);
         armLG.rotation.set(0.2, 0, -0.7);
@@ -524,7 +513,7 @@
         add(handGeo,     skinMat,     armLG, 0.1,-0.82,0.05, 0,0,0, 1,0.85,0.85);
         [-0.12, 0, 0.12].forEach(ox => add(fingerGeo, skinMat, armLG, ox+0.1,-1.05,0.08));
 
-        // Right arm (relaxed, down)
+        
         const armRG = new THREE.Group();
         armRG.position.set(1.05, -0.1, 0.1);
         armRG.rotation.set(0.1, 0, 0.55);
@@ -534,7 +523,7 @@
         add(handGeo,     skinMat,     armRG, -0.05,-0.8,-0.05, 0,0,0, 1,0.85,0.85);
         [-0.12, 0, 0.12].forEach(ox => add(fingerGeo, skinMat, armRG, -ox-0.05,-1.0,0.05));
 
-        // ── LEGS ──────────────────────────────────────
+        
         const legGeo  = new THREE.CylinderGeometry(0.22, 0.18, 0.7, 14);
         const footGeo = new THREE.SphereGeometry(0.22, 16, 16);
 
@@ -552,42 +541,40 @@
         add(legGeo,  skinMat,     legRG, 0, 0, 0);
         add(footGeo, darkSkinMat, legRG, 0.06,-0.42,0.15, 0,0,0, 1.2,0.65,1.4);
 
-        // ── Initial pose ──────────────────────────────
+        
         alien.position.set(0, -0.3, 0);
         alien.rotation.y = 0.3;
 
-        // Store antenna rest rotations
         const antLRestZ = antL.rotation.z;
         const antRRestZ = antR.rotation.z;
 
-        // ── Animation loop ────────────────────────────
+        
         let t = 0;
         function animate() {
             requestAnimationFrame(animate);
             t += 0.016;
 
-            // Float bob
+            
             alien.position.y = -0.3 + Math.sin(t * 0.9) * 0.08;
 
-            // Body sway
+         
             alien.rotation.z = Math.sin(t * 0.7) * 0.04;
             alien.rotation.y = 0.3 + Math.sin(t * 0.5) * 0.12;
 
-            // Antenna wobble
+            
             antL.rotation.z = antLRestZ + Math.sin(t * 1.8 + 0.5) * 0.15;
             antR.rotation.z = antRRestZ + Math.sin(t * 1.8) * 0.15;
 
-            // Left arm wave
+            
             armLG.rotation.z = -0.7 + Math.sin(t * 1.4) * 0.22;
             armLG.rotation.x =  0.2 + Math.sin(t * 1.1) * 0.1;
 
-            // Eye glow pulse
             const pulse = 0.8 + Math.sin(t * 2.5) * 0.4;
             eyeGlowL.intensity = pulse * 1.5;
             eyeGlowR.intensity = pulse * 1.5;
             irisMat.emissiveIntensity = 1.2 + pulse * 0.6;
 
-            // Antenna tip blink
+            
             antennaTipMat.emissiveIntensity = 1.5 + Math.sin(t * 3.0 + Math.PI) * 0.8;
 
             renderer.render(scene, camera);

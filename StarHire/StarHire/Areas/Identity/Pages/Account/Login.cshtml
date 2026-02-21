@@ -1,0 +1,75 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Login.css" />
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <p class="auth-eyebrow">StarHire Portal</p>
+            <h1>SIGN <span>IN</span></h1>
+            <div class="auth-divider"></div>
+        </div>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary-errors" role="alert"></div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="Input.Email">Email Address</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="commander@starhire.com" />
+                <span asp-validation-for="Input.Email" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="Input.Password">Password</label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="••••••••••••" />
+                <span asp-validation-for="Input.Password" class="field-validation-error"></span>
+            </div>
+
+            <a class="forgot-link" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+
+            <div class="check-row">
+                <input class="form-check-input" asp-for="Input.RememberMe" />
+                <label asp-for="Input.RememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+            </div>
+
+            <button id="login-submit" type="submit" class="btn-auth">Initiate Login</button>
+        </form>
+
+        <div class="auth-footer">
+            No account yet?
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create one &rarr;</a>
+            <br />
+            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" style="font-size:0.78rem;opacity:0.6;">Resend email confirmation</a>
+        </div>
+
+        @{
+            if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <div class="external-divider">
+                    <span>or continue with</span>
+                </div>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    @foreach (var provider in Model.ExternalLogins!)
+                    {
+                        <button type="submit" class="btn-external" name="provider" value="@provider.Name"
+                                title="Log in using your @provider.DisplayName account">
+                            @provider.DisplayName
+                        </button>
+                    }
+                </form>
+            }
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
