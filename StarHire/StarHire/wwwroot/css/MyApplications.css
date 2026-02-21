@@ -6,7 +6,7 @@ html, body {
 }
 
 body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://static.vecteezy.com/system/resources/previews/019/847/897/non_2x/starry-night-sky-background-with-meteors-illustration-vector.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/photos/StarHireBackground.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
