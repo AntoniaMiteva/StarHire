@@ -3,7 +3,21 @@
 body {
     min-height: 100vh;
 }
+header {
+    position: relative;
+    z-index: 100;
+}
 
+    header .navbar {
+        background: rgba(5, 5, 20, 0.85) !important;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(100, 100, 255, 0.3) !important;
+    }
+
+        header .navbar .nav-link,
+        header .navbar .navbar-brand {
+            color: #e0e8ff !important;
+        }
 h1 {
     font-family: 'Orbitron', sans-serif;
     font-weight: 800;
