@@ -117,27 +117,27 @@ public static class SeedData
         if (!await db.Skills.AnyAsync())
         {
             db.Skills.AddRange(
-                new Skill { Id = Guid.NewGuid(), Name = "Piloting" },
-                new Skill { Id = Guid.NewGuid(), Name = "Engineering" },
-                new Skill { Id = Guid.NewGuid(), Name = "Mining" },
-                new Skill { Id = Guid.NewGuid(), Name = "Trading" },
-                new Skill { Id = Guid.NewGuid(), Name = "Repair" },
-                new Skill { Id = Guid.NewGuid(), Name = "Navigation" },
+                new Skill { Id = Guid.NewGuid(), Name = "Piloting", NormalizedName = "Piloting".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Engineering", NormalizedName = "Engineering".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Mining", NormalizedName = "Mining".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Trading", NormalizedName = "Trading".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Repair", NormalizedName = "Repair".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Navigation", NormalizedName = "Navigation".ToUpperInvariant() },
 
-                new Skill { Id = Guid.NewGuid(), Name = "Astro Navigation" },
-                new Skill { Id = Guid.NewGuid(), Name = "Robotics" },
-                new Skill { Id = Guid.NewGuid(), Name = "AI Programming" },
-                new Skill { Id = Guid.NewGuid(), Name = "Cybersecurity" },
-                new Skill { Id = Guid.NewGuid(), Name = "Terraforming" },
-                new Skill { Id = Guid.NewGuid(), Name = "Quantum Mechanics" },
-                new Skill { Id = Guid.NewGuid(), Name = "Astrophysics" },
-                new Skill { Id = Guid.NewGuid(), Name = "Diplomacy" },
-                new Skill { Id = Guid.NewGuid(), Name = "Alien Communication" },
-                new Skill { Id = Guid.NewGuid(), Name = "Laser Weapon Handling" },
-                new Skill { Id = Guid.NewGuid(), Name = "Ship Repair" },
-                new Skill { Id = Guid.NewGuid(), Name = "Logistics" },
-                new Skill { Id = Guid.NewGuid(), Name = "Medical Training" },
-                new Skill { Id = Guid.NewGuid(), Name = "Exploration" }
+                new Skill { Id = Guid.NewGuid(), Name = "Astro Navigation", NormalizedName = "Astro Navigation".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Robotics", NormalizedName = "Robotics".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "AI Programming", NormalizedName = "AI Programming".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Cybersecurity", NormalizedName = "Cybersecurity".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Terraforming", NormalizedName = "Terraforming".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Quantum Mechanics", NormalizedName = "Quantum Mechanics".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Astrophysics", NormalizedName = "Astrophysics".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Diplomacy", NormalizedName = "Diplomacy".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Alien Communication", NormalizedName = "Alien Communication".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Laser Weapon Handling", NormalizedName = "Laser Weapon Handling".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Ship Repair", NormalizedName = "Ship Repair".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Logistics", NormalizedName = "Logistics".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Medical Training", NormalizedName = "Medical Training".ToUpperInvariant() },
+                new Skill { Id = Guid.NewGuid(), Name = "Exploration", NormalizedName = "Exploration".ToUpperInvariant() }
             );
 
             await db.SaveChangesAsync();
