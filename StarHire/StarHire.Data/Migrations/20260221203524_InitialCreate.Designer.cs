@@ -12,7 +12,7 @@ using StarHire.Data;
 namespace StarHire.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260220125610_InitialCreate")]
+    [Migration("20260221203524_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -226,6 +226,30 @@ namespace StarHire.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Skill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique();
+
+                    b.ToTable("Skills");
+                });
+
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Application", b =>
                 {
                     b.Property<Guid>("Id")
@@ -280,6 +304,21 @@ namespace StarHire.Data.Migrations
                     b.HasIndex("EmployeerId");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("UserSkills");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -361,6 +400,30 @@ namespace StarHire.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Employeer");
+                });
+
+            modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>
+                {
+                    b.HasOne("Skill", "Skill")
+                        .WithMany("UserSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Skill");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Skill", b =>
+                {
+                    b.Navigation("UserSkills");
                 });
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Job", b =>

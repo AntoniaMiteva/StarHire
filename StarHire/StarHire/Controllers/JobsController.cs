@@ -39,7 +39,7 @@ namespace StarHire.Controllers
             return View(job);
         }
 
-        [Authorize(Roles = "Employer")]
+        [Authorize(Roles = "Admin,Employer")]
         public IActionResult Create()
         {
             return View();
@@ -47,7 +47,7 @@ namespace StarHire.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Employer")]
+        [Authorize(Roles = "Admin,Employer")]
         public async Task<IActionResult> Create(CreateJobViewModel model)
         {
             if (!ModelState.IsValid)
