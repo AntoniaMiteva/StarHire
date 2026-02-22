@@ -1,0 +1,40 @@
+﻿@model List<StarHire.Models.ViewModels.Jobs.JobViewModel>
+
+@{
+    ViewData["Title"] = "My Jobs";
+}
+
+<div class="jobs-page">
+    <div class="jobs-header">
+        <p class="jobs-subtitle">MY GALACTIC POSTINGS</p>
+        <h1 class="jobs-title">My<span>Jobs</span></h1>
+        <div class="jobs-divider"></div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <p style="color:#aaa; text-align:center; margin-top:3rem;">
+            You have no job postings yet.
+        </p>
+    }
+    else
+    {
+        <div class="jobs-grid">
+            @foreach (var job in Model)
+            {
+                <a href="@Url.Action("Applicants", "Jobs", new { jobId = job.Id })" class="job-card-link">
+                    <div class="job-card">
+                        <div class="job-card-corner"></div>
+                        <p class="job-planet">● @job.Planet.ToUpper()</p>
+                        <h3 class="job-title">@job.Title</h3>
+                        <p class="job-desc">@job.Description</p>
+                        <div class="job-footer">
+                            <span class="job-salary">@job.Salary.ToString("N0") ¢ / cycle</span>
+                            <span class="job-applied">@job.Applications.Count applied</span>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</div>
