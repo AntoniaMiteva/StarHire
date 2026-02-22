@@ -75,4 +75,16 @@ public class ApplicationService : IApplicationService
 
         return _mapper.Map<List<ApplicationViewModel>>(applications);
     }
+
+    public async Task UpdateStatusAsync(Guid applicationId, ApplicationStatus status)
+    {
+        var application = await _applicationRepository.Query()
+            .FirstOrDefaultAsync(a => a.Id == applicationId);
+
+        if (application == null)
+            throw new InvalidOperationException("Application not found!");
+
+        application.Status = status;
+        await _applicationRepository.CommitAsync();
+    }
 }
