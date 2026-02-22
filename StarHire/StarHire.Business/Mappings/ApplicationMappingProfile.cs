@@ -15,6 +15,7 @@ namespace StarHire.Business.Mappings
         {
             CreateMap<Application, ApplicationViewModel>();
             //CreateMap <ApplicationCreateOrEditViewModel, Application>();
+            CreateMap<CreateApplicationViewModel, Application>();
         }
     }
 }

@@ -15,6 +15,6 @@ namespace StarHire.Models.Domain.Entities
         public IdentityUser<Guid> Alien { get; set; }
 
         public ApplicationStatus Status { get; set; }
-        
+        public string Message { get; set; } = string.Empty;
     }
 }
