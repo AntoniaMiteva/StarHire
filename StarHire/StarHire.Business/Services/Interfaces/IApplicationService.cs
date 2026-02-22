@@ -1,4 +1,5 @@
-﻿using StarHire.Models.ViewModels.Applications;
+﻿using StarHire.Models;
+using StarHire.Models.ViewModels.Applications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace StarHire.Business.Services.Interfaces
        
         public Task ApplyAsync(Guid jobId, Guid userId, string message);
         public Task<List<ApplicationViewModel>> GetMyApplicationsAsync(Guid userId);
-
+        Task UpdateStatusAsync(Guid applicationId, ApplicationStatus status);
     }
 }

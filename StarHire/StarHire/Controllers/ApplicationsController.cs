@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarHire.Business.Services.Interfaces;
+using StarHire.Models;
 using System.Security.Claims;
 
 namespace StarHire.Controllers
@@ -45,6 +46,15 @@ namespace StarHire.Controllers
             var applications = await _applicationService.GetMyApplicationsAsync(userId);
 
             return View(applications);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employer,Admin")]
+        public async Task<IActionResult> UpdateStatus(Guid applicationId, ApplicationStatus status, Guid jobId)
+        {
+            await _applicationService.UpdateStatusAsync(applicationId, status);
+            return RedirectToAction("Applicants", "Jobs", new { jobId = jobId });
         }
     }
 }
