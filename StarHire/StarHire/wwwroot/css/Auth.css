@@ -43,7 +43,7 @@ body {
     --text-dim: #6b7db3;
 }
 
-/* ── Page wrapper ── */
+
 .auth-wrapper {
     min-height: 80vh;
     display: flex;
@@ -52,7 +52,7 @@ body {
     padding: 2rem 1rem;
 }
 
-/* ── Auth card ── */
+
 .auth-card {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -65,7 +65,7 @@ body {
     animation: fadeUp 0.5s ease both;
 }
 
-    /* top cyan line */
+    
     .auth-card::before {
         content: '';
         position: absolute;
@@ -76,7 +76,7 @@ body {
         background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
     }
 
-    /* corner accent */
+    
     .auth-card::after {
         content: '';
         position: absolute;
@@ -88,7 +88,7 @@ body {
         border-right: 1px solid rgba(0,245,255,0.35);
     }
 
-/* ── Header ── */
+
 .auth-header {
     text-align: center;
     margin-bottom: 2.2rem;
@@ -126,7 +126,7 @@ body {
     margin: 1rem auto 0;
 }
 
-/* ── Form fields ── */
+
 .form-group {
     margin-bottom: 1.3rem;
 }
@@ -164,7 +164,7 @@ body {
         box-shadow: 0 0 0 3px rgba(0,245,255,0.07);
     }
 
-/* ── Validation errors ── */
+
 .field-validation-error,
 .text-danger {
     display: block;
@@ -185,7 +185,7 @@ body {
     font-family: 'Rajdhani', sans-serif;
 }
 
-/* ── Remember me / checkbox ── */
+
 .check-row {
     display: flex;
     align-items: center;
@@ -207,7 +207,7 @@ body {
         cursor: pointer;
     }
 
-/* ── Submit button ── */
+
 .btn-auth {
     width: 100%;
     font-family: 'Orbitron', monospace;
@@ -230,7 +230,7 @@ body {
         box-shadow: 0 0 36px rgba(0,245,255,0.5);
     }
 
-/* ── Footer link ── */
+
 .auth-footer {
     text-align: center;
     font-family: 'Rajdhani', sans-serif;
@@ -251,7 +251,7 @@ body {
             text-decoration: none;
         }
 
-/* ── Forgot password link ── */
+
 .forgot-link {
     display: block;
     text-align: right;
@@ -268,7 +268,7 @@ body {
         color: var(--neon-cyan);
     }
 
-/* ── External login divider ── */
+
 .external-divider {
     display: flex;
     align-items: center;
@@ -293,7 +293,6 @@ body {
         white-space: nowrap;
     }
 
-/* ── External login buttons ── */
 .btn-external {
     width: 100%;
     font-family: 'Orbitron', monospace;
@@ -316,7 +315,7 @@ body {
         box-shadow: 0 0 14px rgba(0,245,255,0.12);
     }
 
-/* ── Confirmation pages (ForgotPasswordConfirmation, ResetPasswordConfirmation) ── */
+
 .confirm-icon {
     text-align: center;
     font-size: 2.8rem;

@@ -82,7 +82,7 @@ body {
     margin: 1.25rem auto 0;
 }
 
-/* Form card */
+
 .form-card {
     width: 100%;
     max-width: 720px;
@@ -111,7 +111,6 @@ body {
     gap: 1.5rem;
 }
 
-/* Field group */
 .field-group {
     display: flex;
     flex-direction: column;
@@ -165,7 +164,7 @@ body {
             background: rgba(0,245,255,0.02);
         }
 
-        /* Validation states */
+        
         .field-group input.input-valid,
         .field-group textarea.input-valid {
             border-color: rgba(0,255,136,0.4);
@@ -191,7 +190,7 @@ body {
         font-size: 0.75rem;
     }
 
-/* ASP.NET validation summary */
+
 .validation-summary-errors {
     background: rgba(255,45,107,0.08);
     border: 1px solid rgba(255,45,107,0.3);
@@ -206,7 +205,7 @@ body {
         padding-left: 1.25rem;
     }
 
-/* Row layout for salary + planet */
+
 .field-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -219,7 +218,7 @@ body {
     }
 }
 
-/* Submit button */
+
 .form-footer {
     padding: 0 2.5rem 2.5rem;
     display: flex;
@@ -261,7 +260,7 @@ body {
         text-decoration: none;
     }
 
-/* Progress indicator */
+
 .form-progress {
     height: 3px;
     background: var(--border);
