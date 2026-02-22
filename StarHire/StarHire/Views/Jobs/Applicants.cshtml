@@ -1,0 +1,38 @@
+﻿@model List<StarHire.Models.ViewModels.Applications.ApplicantViewModel>
+
+@{
+    ViewData["Title"] = "Applicants";
+}
+
+<div class="jobs-page">
+    <div class="jobs-header">
+        <p class="jobs-subtitle">CREW CANDIDATES</p>
+        <h1 class="jobs-title">Appli<span>cants</span></h1>
+        <div class="jobs-divider"></div>
+    </div>
+
+@if (!Model.Any())
+{
+        <p style="color:#aaa; text-align:center; margin-top:3rem;">
+            No applicants yet for this position.
+        </p>
+}
+else
+{
+        <div class="jobs-grid">
+            @foreach (var applicant in Model)
+            {
+                <div class="job-card">
+                    <div class="job-card-corner"></div>
+                    <p class="job-planet">● CANDIDATE</p>
+                    <h3 class="job-title">@applicant.AlienUserName</h3>
+                    <p class="job-desc">@applicant.AlienEmail</p>
+                    <div class="job-footer">
+                        <span class="job-salary">Status: @applicant.Status</span>
+                    </div>
+                </div>
+            }
+        </div>
+}
+
+    <div style="text-align:center; margin-top:2rem;">

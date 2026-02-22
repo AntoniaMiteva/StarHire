@@ -70,9 +70,24 @@ namespace StarHire.Controllers
         }
 
         [Authorize(Roles = "Admin,Employer")]
-        public IActionResult MyJobs()
+        public async Task<IActionResult> MyJobs()
         {
-            return View();
+            var employerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var jobs = await _jobService.GetByEmployer(employerId);
+            return View(jobs);
+        }
+
+        [Authorize(Roles = "Admin,Employer")]
+        public async Task<IActionResult> Applicants(Guid jobId)
+        {
+            var employerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var applicants = await _jobService.GetApplicants(jobId, employerId);
+
+            if (applicants == null)
+                return Forbid();
+
+            ViewBag.JobId = jobId;
+            return View(applicants);
         }
     }
 }
