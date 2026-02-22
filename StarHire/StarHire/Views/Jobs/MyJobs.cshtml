@@ -1,40 +1,59 @@
 ﻿@model List<StarHire.Models.ViewModels.Jobs.JobViewModel>
-
 @{
     ViewData["Title"] = "My Jobs";
 }
 
-<div class="jobs-page">
-    <div class="jobs-header">
-        <p class="jobs-subtitle">MY GALACTIC POSTINGS</p>
-        <h1 class="jobs-title">My<span>Jobs</span></h1>
-        <div class="jobs-divider"></div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/JobsIndex.css" />
+}
+
+<div style="position:relative; z-index:1; padding: 3rem 1.5rem 5rem;">
+
+    <div class="page-header">
+        <p class="eyebrow">My Galactic Postings</p>
+        <h1>MY <span>JOBS</span></h1>
+        <div class="header-divider"></div>
+    </div>
+
+    <div class="post-job-bar">
+        <a asp-action="Create" asp-controller="Jobs" class="btn-post">+ Post New Job</a>
     </div>
 
     @if (!Model.Any())
     {
-        <p style="color:#aaa; text-align:center; margin-top:3rem;">
-            You have no job postings yet.
-        </p>
+        <div class="empty-state">
+            <div style="font-size:2.5rem; margin-bottom:1rem; opacity:0.3;">🚀</div>
+            <p style="font-family:'Rajdhani',sans-serif; font-size:1.1rem;">You have no job postings yet.</p>
+            <a asp-action="Create" asp-controller="Jobs" class="btn-post" style="display:inline-block; margin-top:1rem;">Post your first job</a>
+        </div>
     }
     else
     {
         <div class="jobs-grid">
             @foreach (var job in Model)
             {
-                <a href="@Url.Action("Applicants", "Jobs", new { jobId = job.Id })" class="job-card-link">
-                    <div class="job-card">
-                        <div class="job-card-corner"></div>
-                        <p class="job-planet">● @job.Planet.ToUpper()</p>
-                        <h3 class="job-title">@job.Title</h3>
-                        <p class="job-desc">@job.Description</p>
-                        <div class="job-footer">
-                            <span class="job-salary">@job.Salary.ToString("N0") ¢ / cycle</span>
-                            <span class="job-applied">@job.Applications.Count applied</span>
-                        </div>
+                <a href="@Url.Action("Applicants", "Jobs", new { jobId = job.Id })" class="job-card" style="text-decoration:none;">
+                    <div class="corner-accent"></div>
+
+                    <p class="planet-tag">
+                        <span class="planet-dot"></span>
+                        @job.Planet.ToUpper()
+                    </p>
+
+                    <h3 class="job-title-card">@job.Title</h3>
+                    <p class="job-description">@job.Description</p>
+
+                    <div class="card-bottom">
+                        <span class="salary-display">
+                            @job.Salary.ToString("N0") ¢<small>/ cycle</small>
+                        </span>
+                        <span class="applicant-count">
+                            <span>@job.Applications.Count</span> applied
+                        </span>
                     </div>
                 </a>
             }
         </div>
     }
+
 </div>
