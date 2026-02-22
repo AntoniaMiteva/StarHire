@@ -223,6 +223,30 @@ namespace StarHire.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Skill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique();
+
+                    b.ToTable("Skills");
+                });
+
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Application", b =>
                 {
                     b.Property<Guid>("Id")
@@ -277,30 +301,6 @@ namespace StarHire.Data.Migrations
                     b.HasIndex("EmployeerId");
 
                     b.ToTable("Jobs");
-                });
-
-            modelBuilder.Entity("StarHire.Models.Domain.Entities.Skill", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NormalizedName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique();
-
-                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>
@@ -401,7 +401,7 @@ namespace StarHire.Data.Migrations
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>
                 {
-                    b.HasOne("StarHire.Models.Domain.Entities.Skill", "Skill")
+                    b.HasOne("Skill", "Skill")
                         .WithMany("UserSkills")
                         .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -418,14 +418,14 @@ namespace StarHire.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Skill", b =>
+                {
+                    b.Navigation("UserSkills");
+                });
+
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Job", b =>
                 {
                     b.Navigation("Applications");
-                });
-
-            modelBuilder.Entity("StarHire.Models.Domain.Entities.Skill", b =>
-                {
-                    b.Navigation("UserSkills");
                 });
 #pragma warning restore 612, 618
         }

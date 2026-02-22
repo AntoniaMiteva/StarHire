@@ -5,23 +5,51 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
+@section Styles {
+    <link rel="stylesheet" href="~/css/Manage.css" />
+}
+
+<div class="manage-wrapper">
+
+    <div class="page-header">
+        <p class="eyebrow">StarHire · Account</p>
+        <h1>MANAGE <span>ACCOUNT</span></h1>
+        <div class="header-divider"></div>
+    </div>
+
+    <div class="manage-layout">
+
+        <nav class="manage-nav">
+            <p class="nav-label">Settings</p>
+            <a asp-page="./Index" class="@(ViewData["ActivePage"]?.ToString() == ManageNavPages.Index ? "active" : "")">Profile</a>
+            <a asp-page="./Email" class="@(ViewData["ActivePage"]?.ToString() == ManageNavPages.Email ? "active" : "")">Email</a>
+            <a asp-page="./ChangePassword" class="@(ViewData["ActivePage"]?.ToString() == ManageNavPages.ChangePassword ? "active" : "")">Password</a>
+            <a asp-page="./Skills" class="@(ViewData["ActivePage"]?.ToString() == ManageNavPages.Skills ? "active" : "")">Skills</a>
+        </nav>
+
+        <div class="manage-card">
+            <h3>Profile</h3>
+
+            <partial name="_StatusMessage" for="StatusMessage" />
+
+            <form id="profile-form" method="post">
+                <div asp-validation-summary="ModelOnly" class="validation-summary-errors" role="alert"></div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="Username">Username</label>
+                    <input asp-for="Username" class="form-control" placeholder="Your username" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="Input.PhoneNumber">Phone Number</label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" placeholder="+1 234 567 8900" />
+                    <span asp-validation-for="Input.PhoneNumber" class="field-validation-error"></span>
+                </div>
+
+                <button id="update-profile-button" type="submit" class="btn-manage">Save Changes</button>
+            </form>
+        </div>
+
     </div>
 </div>
 
