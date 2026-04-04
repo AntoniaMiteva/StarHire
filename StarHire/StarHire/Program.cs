@@ -32,6 +32,7 @@ builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IApplicationService, ApplicationService>();
 builder.Services.AddTransient<IJobService, JobService>();
 builder.Services.AddTransient<ISkillService, SkillService>();
+builder.Services.AddTransient<IFavoriteService, FavoriteService>();
 
 
 var app = builder.Build();
