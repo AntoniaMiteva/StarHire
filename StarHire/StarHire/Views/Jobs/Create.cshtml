@@ -3,9 +3,8 @@
     ViewData["Title"] = "Post a Job";
 }
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/JobsCreate.css" />
-    
 }
 <div class="create-wrapper">
 
@@ -49,9 +48,25 @@
                         <span asp-validation-for="Planet" class="validation-message"></span>
                     </div>
                 </div>
+
+                <div class="field-group">
+                    <label>Required Skills</label>
+                    <div class="skills-grid">
+                        @for (int i = 0; i < Model.Skills.Count; i++)
+                        {
+                            <div class="skill-checkbox">
+                                <input type="checkbox"
+                                       name="SelectedSkillIds"
+                                       value="@Model.Skills[i].Id"
+                                       id="skill_@i"
+                                       @(Model.Skills[i].IsSelected ? "checked" : "") />
+                                <label for="skill_@i">@Model.Skills[i].Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
 
-            
             <div class="form-progress">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
@@ -65,7 +80,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         const fields = ['Title', 'Description', 'Salary', 'Planet'];
         const progressFill = document.getElementById('progressFill');
@@ -101,4 +118,3 @@
         updateProgress();
     </script>
 }
-

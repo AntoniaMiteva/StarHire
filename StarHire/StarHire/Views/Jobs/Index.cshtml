@@ -66,6 +66,13 @@
                                 <span>@job.Applications.Count</span> applied
                             </div>
                         </div>
+                        @if (job.CompatibilityPercent.HasValue)
+                        {
+                            <div class="compatibility-bar">
+                                <div class="compatibility-fill" style="width:@job.CompatibilityPercent%"></div>
+                                <span class="compatibility-label">@job.CompatibilityPercent% match</span>
+                            </div>
+                        }
                     </a>
                 </div>
             }

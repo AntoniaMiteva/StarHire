@@ -178,14 +178,14 @@ namespace StarHire.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Planet = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmployeerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    EmployerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jobs_AspNetUsers_EmployeerId",
-                        column: x => x.EmployeerId,
+                        name: "FK_Jobs_AspNetUsers_EmployerId",
+                        column: x => x.EmployerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -291,9 +291,9 @@ namespace StarHire.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_EmployeerId",
+                name: "IX_Jobs_EmployerId",
                 table: "Jobs",
-                column: "EmployeerId");
+                column: "EmployerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Skills_NormalizedName",

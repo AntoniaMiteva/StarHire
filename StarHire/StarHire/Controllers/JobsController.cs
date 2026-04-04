@@ -18,19 +18,20 @@ namespace StarHire.Controllers
         }
 
 
+       
         public async Task<IActionResult> Index(string? search, string? planet, decimal? minSalary)
         {
-            var jobs = await _jobService.GetAll(search, planet, minSalary);
+            Guid? userId = null;
+            if (User.IsInRole("Alien"))
+            {
+                userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                ViewBag.FavoriteIds = await _favoriteService.GetFavoriteJobIdsAsync(userId.Value);
+            }
+
+            var jobs = await _jobService.GetAll(search, planet, minSalary, userId);
             ViewBag.Search = search;
             ViewBag.Planet = planet;
             ViewBag.MinSalary = minSalary;
-
-            if (User.IsInRole("Alien"))
-            {
-                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-                ViewBag.FavoriteIds = await _favoriteService.GetFavoriteJobIdsAsync(userId);
-            }
-
             return View(jobs);
         }
 
@@ -46,11 +47,7 @@ namespace StarHire.Controllers
             return View(job);
         }
 
-        [Authorize(Roles = "Admin,Employer")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,6 +92,16 @@ namespace StarHire.Controllers
 
             ViewBag.JobId = jobId;
             return View(applicants);
+        }
+
+        [Authorize(Roles = "Admin,Employer")]
+        public async Task<IActionResult> Create()
+        {
+            var model = new CreateJobViewModel
+            {
+                Skills = await _jobService.GetAllSkillsAsync()
+            };
+            return View(model);
         }
     }
 }
