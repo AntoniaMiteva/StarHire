@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarHire.Models.ViewModels.Skills;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace StarHire.Models.ViewModels.Jobs
 
         [Required]
         public string Planet { get; set; } = string.Empty;
+        public List<SkillCheckboxViewModel> Skills { get; set; } = new();
+        public List<Guid> SelectedSkillIds { get; set; } = new();
     }
 }

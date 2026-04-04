@@ -309,7 +309,7 @@ namespace StarHire.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EmployeerId")
+                    b.Property<Guid>("EmployerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Planet")
@@ -326,7 +326,7 @@ namespace StarHire.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeerId");
+                    b.HasIndex("EmployerId");
 
                     b.ToTable("Jobs");
                 });
@@ -437,13 +437,13 @@ namespace StarHire.Data.Migrations
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Job", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", "Employeer")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", "Employer")
                         .WithMany()
-                        .HasForeignKey("EmployeerId")
+                        .HasForeignKey("EmployerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employeer");
+                    b.Navigation("Employer");
                 });
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>

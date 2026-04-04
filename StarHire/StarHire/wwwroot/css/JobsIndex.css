@@ -384,3 +384,21 @@ body {
     .heart-btn.favorited {
         color: #aa00ff;
     }
+
+.compatibility-bar {
+    margin-top: 0.75rem;
+}
+
+.compatibility-fill {
+    display: none;
+}
+
+.compatibility-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: #00f5a0;
+    background: rgba(0, 245, 160, 0.1);
+    border: 1px solid rgba(0, 245, 160, 0.3);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+}

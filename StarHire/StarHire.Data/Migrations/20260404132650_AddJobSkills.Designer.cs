@@ -12,8 +12,8 @@ using StarHire.Data;
 namespace StarHire.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260222075504_AddMessageToApplication")]
-    partial class AddMessageToApplication
+    [Migration("20260404132650_AddJobSkills")]
+    partial class AddJobSkills
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -278,6 +278,27 @@ namespace StarHire.Data.Migrations
                     b.ToTable("Applications");
                 });
 
+            modelBuilder.Entity("StarHire.Models.Domain.Entities.Favorite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Job", b =>
                 {
                     b.Property<Guid>("Id")
@@ -308,6 +329,21 @@ namespace StarHire.Data.Migrations
                     b.HasIndex("EmployerId");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("StarHire.Models.Domain.Entities.JobSkill", b =>
+                {
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("JobId", "SkillId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("JobSkills");
                 });
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>
@@ -395,6 +431,25 @@ namespace StarHire.Data.Migrations
                     b.Navigation("Job");
                 });
 
+            modelBuilder.Entity("StarHire.Models.Domain.Entities.Favorite", b =>
+                {
+                    b.HasOne("StarHire.Models.Domain.Entities.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Job", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", "Employer")
@@ -404,6 +459,25 @@ namespace StarHire.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("StarHire.Models.Domain.Entities.JobSkill", b =>
+                {
+                    b.HasOne("StarHire.Models.Domain.Entities.Job", "Job")
+                        .WithMany("JobSkills")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Skill", "Skill")
+                        .WithMany()
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("StarHire.Models.Domain.Entities.UserSkill", b =>
@@ -433,6 +507,8 @@ namespace StarHire.Data.Migrations
             modelBuilder.Entity("StarHire.Models.Domain.Entities.Job", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("JobSkills");
                 });
 #pragma warning restore 612, 618
         }

@@ -30,9 +30,9 @@
                     <span class="applicant-chip"><strong>@Model.Applications.Count</strong>&nbsp;applicants</span>
                 </div>
                 <h1 class="job-detail-title">@Model.Title</h1>
-                @if (Model.Employeer != null)
+                @if (Model.Employer != null)
                 {
-                    <p class="posted-by">Posted by <span>@Model.Employeer.UserName</span></p>
+                    <p class="posted-by">Posted by <span>@Model.Employer.UserName</span></p>
                 }
                 <div class="salary-hero">
                     <span class="salary-amount">@Model.Salary.ToString("N0")</span>

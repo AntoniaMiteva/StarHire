@@ -23,9 +23,12 @@ namespace StarHire.Models.ViewModels.Jobs
 
         public string Planet { get; set; } = string.Empty;
 
-        public Guid EmployeerId { get; set; }
-        public IdentityUser<Guid> Employeer { get; set; }
+        public Guid EmployerId { get; set; }
+        public IdentityUser<Guid> Employer { get; set; }
 
         public ICollection<ApplicationViewModel> Applications { get; set; } = new List<ApplicationViewModel>();
+
+        public List<string> RequiredSkills { get; set; } = new();
+        public int? CompatibilityPercent { get; set; }
     }
 }

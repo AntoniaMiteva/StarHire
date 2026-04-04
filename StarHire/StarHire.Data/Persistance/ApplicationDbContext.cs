@@ -66,12 +66,29 @@ namespace StarHire.Data
                 .WithMany()
                 .HasForeignKey(f => f.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobSkill>()
+                .HasKey(js => new { js.JobId, js.SkillId });
+
+            modelBuilder.Entity<JobSkill>()
+                .HasOne(js => js.Job)
+                .WithMany(j => j.JobSkills)
+                .HasForeignKey(js => js.JobId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<JobSkill>()
+                .HasOne(js => js.Skill)
+                .WithMany()
+                .HasForeignKey(js => js.SkillId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         public DbSet<Skill> Skills { get; set; } = null!;
         public DbSet<UserSkill> UserSkills { get; set; } = null!;
 
         public DbSet<Favorite> Favorites { get; set; }
+
+        public DbSet<JobSkill> JobSkills { get; set; }
     }
  }
 
