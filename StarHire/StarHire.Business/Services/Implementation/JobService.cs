@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StarHire.Business.Repositories.Interfaces;
 using StarHire.Business.Services.Interfaces;
@@ -29,6 +29,34 @@ public class JobService : IJobService
             .OrderBy(s => s.Name)
             .Select(s => new SkillCheckboxViewModel { Id = s.Id, Name = s.Name })
             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<JobViewModel>> GetRecommendedAsync(Guid userId)
+    {
+        var userSkillIds = await _db.UserSkills
+            .Where(us => us.UserId == userId)
+            .Select(us => us.SkillId)
+            .ToListAsync();
+
+        var jobs = await _db.Jobs
+            .Include(j => j.JobSkills)
+                .ThenInclude(js => js.Skill)
+            .Where(j => j.JobSkills.Any(js => userSkillIds.Contains(js.SkillId)))
+            .ToListAsync();
+
+        return jobs.Select(j => new JobViewModel
+        {
+            Id = j.Id,
+            Title = j.Title,
+            Description = j.Description,
+            Salary = j.Salary,
+            Planet = j.Planet,
+            EmployerId = j.EmployerId,
+            RequiredSkills = j.JobSkills.Select(js => js.Skill.Name).ToList(),
+            CompatibilityPercent = j.JobSkills.Any()
+                ? (int)Math.Round((double)j.JobSkills.Count(js => userSkillIds.Contains(js.SkillId)) / j.JobSkills.Count * 100)
+                : null
+        }).ToList();
     }
 
     public async Task<List<JobViewModel>> GetAll(string? search, string? planet, decimal? minSalary, Guid? userId = null)
