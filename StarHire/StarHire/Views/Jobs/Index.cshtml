@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>
+@model IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>
 @{
     ViewData["Title"] = "Job Listings";
 }
@@ -24,6 +24,40 @@
         <div class="post-job-bar">
             <a asp-action="Create" class="btn-post">+ Post New Job</a>
         </div>
+    }
+
+    @if (User.IsInRole("Alien") && ViewBag.RecommendedJobs != null && ((IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>)ViewBag.RecommendedJobs).Any())
+    {
+        <div class="recommended-section">
+            <h3 class="recommended-title">⭐ Recommended for You</h3>
+            <div class="jobs-grid">
+                @foreach (var job in ((IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>)ViewBag.RecommendedJobs).OrderByDescending(j => j.CompatibilityPercent).Take(3))
+                {
+                    <a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="job-card">
+                        <div class="corner-accent"></div>
+                        <div class="planet-tag">
+                            <span class="planet-dot"></span>
+                            @job.Planet
+                        </div>
+                        <h2 class="job-title-card">@job.Title</h2>
+                        <p class="job-description">@job.Description</p>
+                        <div class="card-bottom">
+                            <div class="salary-display">
+                                @job.Salary.ToString("N0")<small>₵ / cycle</small>
+                            </div>
+                        </div>
+                        @if (job.CompatibilityPercent.HasValue)
+                        {
+                            <div class="compatibility-bar">
+                                <div class="compatibility-fill" style="width:@job.CompatibilityPercent%"></div>
+                                <span class="compatibility-label">@job.CompatibilityPercent% match</span>
+                            </div>
+                        }
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="header-divider" style="margin: 2rem 0;"></div>
     }
 
     <div class="jobs-grid">
