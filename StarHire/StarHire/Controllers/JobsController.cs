@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarHire.Business.Services.Interfaces;
 using StarHire.Models.ViewModels.Jobs;
@@ -17,8 +17,6 @@ namespace StarHire.Controllers
             _favoriteService = favoriteService;
         }
 
-
-       
         public async Task<IActionResult> Index(string? search, string? planet, decimal? minSalary)
         {
             Guid? userId = null;
@@ -26,6 +24,7 @@ namespace StarHire.Controllers
             {
                 userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
                 ViewBag.FavoriteIds = await _favoriteService.GetFavoriteJobIdsAsync(userId.Value);
+                ViewBag.RecommendedJobs = await _jobService.GetRecommendedAsync(userId.Value);
             }
 
             var jobs = await _jobService.GetAll(search, planet, minSalary, userId);
@@ -38,35 +37,23 @@ namespace StarHire.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var job = await _jobService.GetById(id);
-
-            if (job == null)
-            {
-                return NotFound();
-            }
-
+            if (job == null) return NotFound();
             return View(job);
         }
-
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employer")]
         public async Task<IActionResult> Create(CreateJobViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
+            if (!ModelState.IsValid) return View(model);
             try
             {
                 var employerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
                 await _jobService.Create(model, employerId);
-
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
+            catch
             {
                 ModelState.AddModelError(string.Empty, "Something went wrong while creating the job!");
                 return View(model);
@@ -86,10 +73,7 @@ namespace StarHire.Controllers
         {
             var employerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var applicants = await _jobService.GetApplicants(jobId, employerId);
-
-            if (applicants == null)
-                return Forbid();
-
+            if (applicants == null) return Forbid();
             ViewBag.JobId = jobId;
             return View(applicants);
         }
@@ -103,6 +87,13 @@ namespace StarHire.Controllers
             };
             return View(model);
         }
+
+        [Authorize(Roles = "Alien")]
+        public async Task<IActionResult> Recommended()
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var jobs = await _jobService.GetRecommendedAsync(userId);
+            return View(jobs);
+        }
     }
 }
-    
