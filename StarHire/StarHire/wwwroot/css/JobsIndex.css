@@ -360,3 +360,27 @@ body {
 .job-card:nth-child(6) {
     animation-delay: 0.24s;
 }
+.job-card-wrapper {
+    position: relative;
+}
+
+.heart-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    line-height: 1;
+}
+
+    .heart-btn:hover {
+        //color: #ff4d6d;
+        //color: ghostwhite;
+        color: #aa00ff;
+        transform: scale(1.2);
+    }
+
+    .heart-btn.favorited {
+        color: #aa00ff;
+    }

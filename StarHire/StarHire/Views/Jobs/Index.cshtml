@@ -1,20 +1,17 @@
-﻿
-@model IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>
+﻿@model IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>
 @{
-     ViewData["Title"] = "Job Listings";
+    ViewData["Title"] = "Job Listings";
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/JobsIndex.css" />
-    }
+}
 <div class="jobs-wrapper">
-
     <div class="page-header">
         <p class="eyebrow">Galactic Opportunities</p>
         <h1><span>Star</span>Hire</h1>
         <div class="header-divider"></div>
     </div>
 
-    
     <form method="get" asp-action="Index" class="filter-bar">
         <input type="text" name="search" value="@ViewBag.Search" placeholder="Search positions..." />
         <input type="text" name="planet" value="@ViewBag.Planet" placeholder="Planet / location..." />
@@ -41,23 +38,36 @@
         {
             @foreach (var job in Model)
             {
-                <a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="job-card">
-                    <div class="corner-accent"></div>
-                    <div class="planet-tag">
-                        <span class="planet-dot"></span>
-                        @job.Planet
-                    </div>
-                    <h2 class="job-title-card">@job.Title</h2>
-                    <p class="job-description">@job.Description</p>
-                    <div class="card-bottom">
-                        <div class="salary-display">
-                            @job.Salary.ToString("N0")<small>₵ / cycle</small>
+                <div class="job-card-wrapper" style="position:relative;">
+                    @if (User.IsInRole("Alien"))
+                    {
+                        <form method="post" asp-controller="Favorites" asp-action="Toggle" style="position:absolute; top:10px; right:10px; z-index:10;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="jobId" value="@job.Id" />
+                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                            <button type="submit" class="heart-btn @(ViewBag.FavoriteIds != null && ((List<Guid>)ViewBag.FavoriteIds).Contains(job.Id) ? "favorited" : "")">
+                                ♥
+                            </button>
+                        </form>
+                    }
+                    <a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="job-card">
+                        <div class="corner-accent"></div>
+                        <div class="planet-tag">
+                            <span class="planet-dot"></span>
+                            @job.Planet
                         </div>
-                        <div class="applicant-count">
-                            <span>@job.Applications.Count</span> applied
+                        <h2 class="job-title-card">@job.Title</h2>
+                        <p class="job-description">@job.Description</p>
+                        <div class="card-bottom">
+                            <div class="salary-display">
+                                @job.Salary.ToString("N0")<small>₵ / cycle</small>
+                            </div>
+                            <div class="applicant-count">
+                                <span>@job.Applications.Count</span> applied
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             }
         }
     </div>

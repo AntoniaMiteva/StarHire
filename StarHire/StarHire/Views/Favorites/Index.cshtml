@@ -1,0 +1,55 @@
+﻿@model IEnumerable<StarHire.Models.ViewModels.Jobs.JobViewModel>
+@{
+    ViewData["Title"] = "Favorites";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/JobsIndex.css" />
+}
+<div class="jobs-wrapper">
+    <div class="page-header">
+        <p class="eyebrow">Saved Missions</p>
+        <h1> ♥ <span>Favorites</span> ♥ </h1>
+        <div class="header-divider"></div>
+    </div>
+
+    <div class="jobs-grid">
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <p style="font-size:2rem;margin-bottom:0.5rem;">🤍</p>
+                <p>No missions saved yet… go find one and give it some love! </p> <!--❤-->
+            </div>
+        }
+        else
+        {
+            @foreach (var job in Model)
+            {
+                <div class="job-card-wrapper" style="position:relative;">
+                    <form method="post" asp-controller="Favorites" asp-action="Toggle" style="position:absolute; top:10px; right:10px; z-index:10;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="jobId" value="@job.Id" />
+                        <input type="hidden" name="returnUrl" value="/Favorites" />
+                        <button type="submit" class="heart-btn favorited">♥</button>
+                    </form>
+                    <a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="job-card">
+                        <div class="corner-accent"></div>
+                        <div class="planet-tag">
+                            <span class="planet-dot"></span>
+                            @job.Planet
+                        </div>
+                        <h2 class="job-title-card">@job.Title</h2>
+                        <p class="job-description">@job.Description</p>
+                        <div class="card-bottom">
+                            <div class="salary-display">
+                                @job.Salary.ToString("N0")<small>₵ / cycle</small>
+                            </div>
+                            <div class="applicant-count">
+                                <span>@job.Applications.Count</span> applied
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>

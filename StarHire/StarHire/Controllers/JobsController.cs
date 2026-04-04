@@ -9,20 +9,27 @@ namespace StarHire.Controllers
     public class JobsController : Controller
     {
         private readonly IJobService _jobService;
+        private readonly IFavoriteService _favoriteService;
 
-        public JobsController(IJobService jobService)
+        public JobsController(IJobService jobService, IFavoriteService favoriteService)
         {
             _jobService = jobService;
+            _favoriteService = favoriteService;
         }
 
-       
+
         public async Task<IActionResult> Index(string? search, string? planet, decimal? minSalary)
         {
             var jobs = await _jobService.GetAll(search, planet, minSalary);
-
             ViewBag.Search = search;
             ViewBag.Planet = planet;
             ViewBag.MinSalary = minSalary;
+
+            if (User.IsInRole("Alien"))
+            {
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                ViewBag.FavoriteIds = await _favoriteService.GetFavoriteJobIdsAsync(userId);
+            }
 
             return View(jobs);
         }

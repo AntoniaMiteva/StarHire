@@ -54,10 +54,24 @@ namespace StarHire.Data
             modelBuilder.Entity<Skill>()
                 .HasIndex(s => s.NormalizedName)
                 .IsUnique();
+
+            modelBuilder.Entity<Favorite>()
+                .HasOne(f => f.Job)
+                .WithMany()
+                .HasForeignKey(f => f.JobId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Favorite>()
+                .HasOne(f => f.User)
+                .WithMany()
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         public DbSet<Skill> Skills { get; set; } = null!;
         public DbSet<UserSkill> UserSkills { get; set; } = null!;
+
+        public DbSet<Favorite> Favorites { get; set; }
     }
  }
 
