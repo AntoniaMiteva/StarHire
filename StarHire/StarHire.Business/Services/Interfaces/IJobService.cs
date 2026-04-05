@@ -16,7 +16,7 @@ namespace StarHire.Business.Services.Interfaces
         Task<List<JobViewModel>> GetByEmployer(Guid employerId);
         Task<List<ApplicantViewModel>> GetApplicants(Guid jobId, Guid employerId);
         Task<List<SkillCheckboxViewModel>> GetAllSkillsAsync();
-        Task<List<JobViewModel>> GetAll(string? search, string? planet, decimal? minSalary, Guid? userId = null);
+        Task<List<JobViewModel>> GetAll(string? search, string? planet, decimal? minSalary, Guid? userId = null, decimal? maxSalary = null);
         Task<IEnumerable<JobViewModel>> GetRecommendedAsync(Guid userId);
     }
 }

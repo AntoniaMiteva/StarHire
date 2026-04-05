@@ -59,7 +59,7 @@ public class JobService : IJobService
         }).ToList();
     }
 
-    public async Task<List<JobViewModel>> GetAll(string? search, string? planet, decimal? minSalary, Guid? userId = null)
+    public async Task<List<JobViewModel>> GetAll(string? search, string? planet, decimal? minSalary, Guid? userId = null, decimal? maxSalary = null)
     {
         var query = _db.Jobs
             .Include(j => j.Applications)
@@ -73,6 +73,8 @@ public class JobService : IJobService
             query = query.Where(j => j.Planet.Contains(planet));
         if (minSalary.HasValue)
             query = query.Where(j => j.Salary >= minSalary);
+        if (maxSalary.HasValue)
+            query = query.Where(j => j.Salary <= maxSalary.Value);
 
         var jobs = await query.ToListAsync();
 
